@@ -1,6 +1,6 @@
-# Ona — AI pregnancy companion and clinic monitor
+# Nigoh AI — AI pregnancy companion and clinic monitor
 
-*Ona* means "mother" in Uzbek. A pregnant woman answers a 2-minute check-in on her phone every day;
+*Nigoh* means "a watchful, caring look" in Uzbek. A pregnant woman answers a 2-minute check-in on her phone every day;
 her private clinic sees danger signs within seconds, with AI doing the explaining and summarising.
 
 | | |
@@ -66,7 +66,7 @@ lasts 12 hours and survives **Reset demo data**. If needed, press Reset first.
    The phone shows a red result with a call button; **within 3 seconds a red alert drops into the
    clinic dashboard** with her note. Click *Open*, then *Acknowledge*, then send her a message — it appears on her
    phone under *Shifokor*.
-4. **The chat safety net (30 s).** Switch the phone to *Malika* (week 29), open *Ona AI* and type
+4. **The chat safety net (30 s).** Switch the phone to *Malika* (week 29), open *Nigoh AI* and type
    "Bolam bugun kam qimirlayapti". The assistant answers and the clinic receives a chat alert.
 5. **Why it is safe (30 s).** Rules decide the risk level, AI explains it. Works offline. Uzbek first.
    Switch the language to RU / EN to show localisation.

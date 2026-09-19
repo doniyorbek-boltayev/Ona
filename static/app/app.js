@@ -1,4 +1,4 @@
-// Ona mother app — vanilla JS, no build step. All text goes through h()/textContent, never innerHTML.
+// Nigoh AI mother app — vanilla JS, no build step. All text goes through h()/textContent, never innerHTML.
 const params = new URLSearchParams(location.search);
 const S = {
   pid: +params.get("p") || 1,
@@ -102,7 +102,7 @@ function Home() {
 
   return h("div", {},
     h("header", { class: "hero" },
-      h("div", { class: "hero-top" }, h("div", { class: "brand" }, h("img", { src: "/static/icon.svg", alt: "" }), "Ona"), Langs()),
+      h("div", { class: "hero-top" }, h("div", { class: "brand" }, h("img", { src: "/static/icon.svg", alt: "" }), "Nigoh AI"), Langs()),
       h("div", { class: "hello" }, h("div", { class: "avatar" }, p.name.split(" ").map((w) => w[0]).join("").slice(0, 2)),
         h("div", {}, h("h1", {}, `${t("hello")}, ${p.name.split(" ")[0]}!`), h("p", {}, `${S.data.clinic.name} · ${p.doctor}`)))),
     h("div", { class: "stack lift" },
@@ -268,7 +268,7 @@ function Chat({ title, icon, intro, messages, mine, placeholder, suggestions, on
 
 function AiChat() {
   return Chat({
-    title: "Ona AI", icon: "sparkles", intro: t("aiIntro"), mine: "patient", typing: S.sending,
+    title: "Nigoh AI", icon: "sparkles", intro: t("aiIntro"), mine: "patient", typing: S.sending,
     messages: [...S.data.ai_messages, ...(S.pending ? [S.pending] : [])].flatMap((m) => [m, ...S.aiExtra.filter((n) => n.after === m.id)]),
     placeholder: t("aiPlaceholder"), suggestions: [t("sug1"), t("sug2"), t("sug3")],
     onSend: async (text) => {

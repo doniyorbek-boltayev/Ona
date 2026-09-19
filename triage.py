@@ -48,7 +48,7 @@ WHO = "WHO: Pregnancy, Childbirth, Postpartum and Newborn Care (danger signs)"
 BP_SRC = "ISSHP 2021 / ACOG: hypertension in pregnancy thresholds"
 RCOG = "RCOG Green-top Guideline 57: reduced fetal movements"
 PRETERM = "WHO definition of preterm: before 37 completed weeks"
-HEURISTIC = "Ona heuristic, to be validated with local obstetricians"
+HEURISTIC = "Nigoh AI heuristic, to be validated with local obstetricians"
 SOURCES = {
     "bleeding": WHO, "fluid_leak": WHO, "abdominal_pain": WHO, "breathless": WHO, "fever": WHO, "fever_with_pain": WHO,
     "severe_headache": WHO, "vision": WHO, "swelling": WHO, "preeclampsia_signs": BP_SRC, "bp_severe": BP_SRC, "bp_high": BP_SRC,

@@ -1,4 +1,4 @@
-"""Ona demo server: JSON API + static files, Python standard library only.
+"""Nigoh AI demo server: JSON API + static files, Python standard library only.
 
     python server.py [port]
 
@@ -270,7 +270,7 @@ ROUTES = [
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "Ona/1.0"
+    server_version = "NigohAI/1.0"
 
     def log_message(self, fmt, *args):
         if "/api/" in self.path and self.command == "GET":
@@ -363,7 +363,7 @@ def main():
         seed.reset()
     seed.ensure_staff()
     status = ai.status()
-    print("Ona is running")
+    print("Nigoh AI is running")
     print("  Mother app : http://localhost:%d/" % port)
     print("  Clinic     : http://localhost:%d/clinic" % port)
     print("  Stage view : http://localhost:%d/demo" % port)

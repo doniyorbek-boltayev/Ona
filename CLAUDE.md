@@ -1,6 +1,6 @@
-# Ona — AI pregnancy companion & clinic monitor
+# Nigoh AI — AI pregnancy companion & clinic monitor
 
-"Ona" = "mother" in Uzbek. Hackathon demo (national AI hackathon, Khorezm, Uzbekistan).
+"Nigoh" = "a watchful, caring look" in Uzbek. (The project folder, repo and `ONA_*` env vars keep the earlier working name "Ona".) Hackathon demo (national AI hackathon, Khorezm, Uzbekistan).
 
 ## The prompt (what we are building)
 

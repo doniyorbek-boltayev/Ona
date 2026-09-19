@@ -1,4 +1,4 @@
-// Ona clinic dashboard — vanilla JS. Polls the API so new check-ins and alerts appear live.
+// Nigoh AI clinic dashboard — vanilla JS. Polls the API so new check-ins and alerts appear live.
 const T = {
   en: { sub: "Remote antenatal monitoring", patients: "Patients", red: "Urgent", yellow: "Attention", silent: "Silent", today: "Checked in today",
     alerts: "Open alerts", noAlerts: "No open alerts", view: "Open", ack: "Acknowledge", all: "All patients", week: "Week", wk: "wk", years: "y",
@@ -8,7 +8,7 @@ const T = {
     srcTemplate: "Offline mode: rule-based summary. Add an API key to .env for AI-written summaries.",
     bp: "Blood pressure, mmHg", sys: "Systolic", dia: "Diastolic", weight: "Weight, kg", wellbeing: "Mood and anxiety, 1–5", mood: "Mood", anxiety: "Anxiety",
     noData: "No measurements reported", log: "Check-in log", day: "Day", risk: "Risk", flags: "Flags and symptoms", movement: "Movement", meds: "Suppl.", sleep: "Sleep",
-    messages: "Messages with patient", aiChat: "Her conversation with Ona AI", write: "Write to the patient…", send: "Send", empty: "Nothing yet",
+    messages: "Messages with patient", aiChat: "Her conversation with Nigoh AI", write: "Write to the patient…", send: "Send", empty: "Nothing yet",
     pick: "Select a patient", source_checkin: "Daily check-in", source_chat: "AI chat", live: "AI live", offline: "AI offline mode", threshold: "140/90 threshold",
     mv_normal: "normal", mv_less: "less", mv_none: "NONE", reset: "Reset demo",
     newPatient: "New patient", regTitle: "Register a patient", fullName: "Full name", age: "Age", dateKind: "Date known", lmp: "First day of last period", dueDate: "Expected due date",
@@ -21,7 +21,7 @@ const T = {
     navOverview: "Overview", navPatients: "Patients", navAlerts: "Alerts", navRules: "Clinical basis", search: "Search by name, district or doctor…",
     fAll: "All", fMine: "My patients", colName: "Patient", colWeek: "Week", colDoctor: "Doctor", colLast: "Last check-in", col14: "14 days", back: "All patients",
     attention: "Needs attention today", seeAll: "See all", noMatches: "No patients match", allCalm: "Nobody needs attention right now", hello: "Good day",
-    loginTitle: "Clinic sign-in", loginSub: "For clinic staff only. Patients use the Ona mobile app.", username: "Username", password: "Password", signIn: "Sign in", signingIn: "Signing in…",
+    loginTitle: "Clinic sign-in", loginSub: "For clinic staff only. Patients use the Nigoh AI mobile app.", username: "Username", password: "Password", signIn: "Sign in", signingIn: "Signing in…",
     loginError: "Wrong username or password", loginOffline: "Cannot reach the server", logout: "Sign out", demoHint: "Demo account: {u} · password: {p}" },
   ru: { sub: "Дистанционное наблюдение беременных", patients: "Пациентки", red: "Срочно", yellow: "Внимание", silent: "Молчат", today: "Опрос сегодня",
     alerts: "Открытые оповещения", noAlerts: "Открытых оповещений нет", view: "Открыть", ack: "Принято", all: "Все пациентки", week: "Неделя", wk: "нед", years: "л",
@@ -31,7 +31,7 @@ const T = {
     srcTemplate: "Офлайн-режим: сводка на основе правил. Добавьте API-ключ в .env для сводок от ИИ.",
     bp: "Артериальное давление, мм рт. ст.", sys: "Систолическое", dia: "Диастолическое", weight: "Вес, кг", wellbeing: "Настроение и тревога, 1–5", mood: "Настроение", anxiety: "Тревога",
     noData: "Измерений нет", log: "Журнал опросов", day: "День", risk: "Риск", flags: "Флаги и симптомы", movement: "Шевеления", meds: "Витам.", sleep: "Сон",
-    messages: "Переписка с пациенткой", aiChat: "Её диалог с Ona AI", write: "Напишите пациентке…", send: "Отправить", empty: "Пока пусто",
+    messages: "Переписка с пациенткой", aiChat: "Её диалог с Nigoh AI", write: "Напишите пациентке…", send: "Отправить", empty: "Пока пусто",
     pick: "Выберите пациентку", source_checkin: "Ежедневный опрос", source_chat: "ИИ-чат", live: "ИИ онлайн", offline: "ИИ офлайн", threshold: "порог 140/90",
     mv_normal: "норма", mv_less: "меньше", mv_none: "НЕТ", reset: "Сброс демо",
     newPatient: "Новая пациентка", regTitle: "Регистрация пациентки", fullName: "Ф.И.О.", age: "Возраст", dateKind: "Известная дата", lmp: "Первый день последней менструации", dueDate: "Предполагаемая дата родов",
@@ -44,7 +44,7 @@ const T = {
     navOverview: "Обзор", navPatients: "Пациентки", navAlerts: "Оповещения", navRules: "Клиническая основа", search: "Поиск по имени, району или врачу…",
     fAll: "Все", fMine: "Мои пациентки", colName: "Пациентка", colWeek: "Неделя", colDoctor: "Врач", colLast: "Последний опрос", col14: "14 дней", back: "Все пациентки",
     attention: "Сегодня требуют внимания", seeAll: "Показать все", noMatches: "Ничего не найдено", allCalm: "Сейчас никто не требует внимания", hello: "Добрый день",
-    loginTitle: "Вход для клиники", loginSub: "Только для сотрудников клиники. Пациентки пользуются мобильным приложением Ona.", username: "Логин", password: "Пароль", signIn: "Войти", signingIn: "Входим…",
+    loginTitle: "Вход для клиники", loginSub: "Только для сотрудников клиники. Пациентки пользуются мобильным приложением Nigoh AI.", username: "Логин", password: "Пароль", signIn: "Войти", signingIn: "Входим…",
     loginError: "Неверный логин или пароль", loginOffline: "Нет связи с сервером", logout: "Выйти", demoHint: "Демо-аккаунт: {u} · пароль: {p}" },
   uz: { sub: "Homiladorlarni masofadan kuzatish", patients: "Bemorlar", red: "Shoshilinch", yellow: "E'tibor", silent: "Javobsiz", today: "Bugun to'ldirgan",
     alerts: "Ochiq ogohlantirishlar", noAlerts: "Ochiq ogohlantirish yo'q", view: "Ochish", ack: "Qabul qilindi", all: "Barcha bemorlar", week: "Hafta", wk: "hafta", years: "yosh",
@@ -54,7 +54,7 @@ const T = {
     srcTemplate: "Oflayn rejim: qoidalar asosidagi xulosa. AI xulosalari uchun .env fayliga API kalitini kiriting.",
     bp: "Qon bosimi, mm sim. ust.", sys: "Sistolik", dia: "Diastolik", weight: "Vazn, kg", wellbeing: "Kayfiyat va xavotir, 1–5", mood: "Kayfiyat", anxiety: "Xavotir",
     noData: "O'lchovlar kiritilmagan", log: "So'rovnomalar jurnali", day: "Kun", risk: "Xavf", flags: "Belgilar", movement: "Harakat", meds: "Vitamin", sleep: "Uyqu",
-    messages: "Bemor bilan yozishmalar", aiChat: "Uning Ona AI bilan suhbati", write: "Bemorga yozing…", send: "Yuborish", empty: "Hozircha bo'sh",
+    messages: "Bemor bilan yozishmalar", aiChat: "Uning Nigoh AI bilan suhbati", write: "Bemorga yozing…", send: "Yuborish", empty: "Hozircha bo'sh",
     pick: "Bemorni tanlang", source_checkin: "Kunlik so'rovnoma", source_chat: "AI chat", live: "AI ulangan", offline: "AI oflayn rejimda", threshold: "140/90 chegarasi",
     mv_normal: "odatdagidek", mv_less: "kam", mv_none: "YO'Q", reset: "Demoni tiklash",
     newPatient: "Yangi bemor", regTitle: "Bemorni ro'yxatga olish", fullName: "F.I.Sh.", age: "Yoshi", dateKind: "Ma'lum sana", lmp: "Oxirgi hayzning birinchi kuni", dueDate: "Taxminiy tug'ruq sanasi",
@@ -67,7 +67,7 @@ const T = {
     navOverview: "Umumiy ko'rinish", navPatients: "Bemorlar", navAlerts: "Ogohlantirishlar", navRules: "Klinik asos", search: "Ism, tuman yoki shifokor bo'yicha qidirish…",
     fAll: "Hammasi", fMine: "Mening bemorlarim", colName: "Bemor", colWeek: "Hafta", colDoctor: "Shifokor", colLast: "Oxirgi so'rovnoma", col14: "14 kun", back: "Barcha bemorlar",
     attention: "Bugun e'tibor talab qiladi", seeAll: "Hammasini ko'rish", noMatches: "Mos bemor topilmadi", allCalm: "Hozir hech kim e'tibor talab qilmayapti", hello: "Xayrli kun",
-    loginTitle: "Klinika uchun kirish", loginSub: "Faqat klinika xodimlari uchun. Bemorlar Ona mobil ilovasidan foydalanadi.", username: "Login", password: "Parol", signIn: "Kirish", signingIn: "Kirilmoqda…",
+    loginTitle: "Klinika uchun kirish", loginSub: "Faqat klinika xodimlari uchun. Bemorlar Nigoh AI mobil ilovasidan foydalanadi.", username: "Login", password: "Parol", signIn: "Kirish", signingIn: "Kirilmoqda…",
     loginError: "Login yoki parol noto'g'ri", loginOffline: "Server bilan aloqa yo'q", logout: "Chiqish", demoHint: "Demo hisob: {u} · parol: {p}" },
 };
 const SERIES = ["#2a78d6", "#eb6834"];  // validated categorical slots 1-2; status red is reserved for thresholds
@@ -371,7 +371,7 @@ function renderDetail() {
             h("td", { class: "num" }, a.bp?.sys ? `${a.bp.sys}/${a.bp.dia}` : "—"), h("td", { class: "num" }, a.weight ?? "—"), h("td", { class: "num" }, a.mood ?? "—"), h("td", { class: "num" }, a.anxiety ?? "—"),
             h("td", {}, a.movement ? t("mv_" + a.movement) : "—"), h("td", { class: "num" }, SLEEP[a.sleep] || "—"), h("td", {}, a.meds === "yes" ? "✓" : a.meds === "no" ? "✗" : "—")); })))),
       d.ai_messages.length ? h("section", { class: "card wide" }, h("h3", {}, t("aiChat")),
-        h("div", { class: "msgs" }, d.ai_messages.map((m) => h("div", { class: "msg " + (m.sender === "patient" ? "them" : "bot") }, m.text, h("small", {}, (m.sender === "ai" ? "Ona AI · " : "") + stamp(m.created_at)))))) : null));
+        h("div", { class: "msgs" }, d.ai_messages.map((m) => h("div", { class: "msg " + (m.sender === "patient" ? "them" : "bot") }, m.text, h("small", {}, (m.sender === "ai" ? "Nigoh AI · " : "") + stamp(m.created_at)))))) : null));
   const box = $("clinic-msgs"); box.scrollTop = box.scrollHeight;
   if (focus) { const el = $("draft"); el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
 }
@@ -546,7 +546,7 @@ function showLogin(error) {
     }
     button.disabled = false; button.textContent = t("signIn");
   } },
-    h("div", { class: "login-brand" }, h("img", { src: "/static/icon.svg", alt: "" }), h("div", {}, h("b", {}, "Ona Clinic"), h("small", {}, t("sub")))),
+    h("div", { class: "login-brand" }, h("img", { src: "/static/icon.svg", alt: "" }), h("div", {}, h("b", {}, "Nigoh AI Clinic"), h("small", {}, t("sub")))),
     h("h1", {}, t("loginTitle")), h("p", { class: "login-sub" }, t("loginSub")),
     h("label", { for: "login-user" }, t("username")), name,
     h("label", { for: "login-pass" }, t("password")), pass,
