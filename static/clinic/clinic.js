@@ -16,6 +16,8 @@ const T = {
     inviteTitle: "Connect the mother's phone", inviteSub: "She scans this code with her phone camera, or you send her the link. The app opens in her browser, with nothing to install.", copy: "Copy link", copied: "Copied", close: "Close", invite: "App link / QR",
     rulesBtn: "Clinical basis", rulesTitle: "Clinical basis of the risk levels", rulesSub: "The risk level is set only by these {n} rules, covered by {t} automated tests. AI explains a level but can never lower it. Thresholds still need validation with local obstetricians.",
     colRule: "Rule", colLogic: "Condition", colSource: "Source", regError: "Check the name and the date",
+    clinic14: "Whole clinic, last 14 days", clinic14sub: "Check-ins per day by risk level", missed: "No check-in", okLevel: "Stable", adherence: "Check-in adherence", adherenceSub: "of expected check-ins in the last 7 days",
+    vBp: "Last blood pressure", vWeight: "Weight", vMood: "Mood today", vAdh: "Check-ins, 14 days", vMeds: "Supplements taken", vs7: "vs 7 days ago", days: "days", highBp: "above 140/90",
     navOverview: "Overview", navPatients: "Patients", navAlerts: "Alerts", navRules: "Clinical basis", search: "Search by name, district or doctor…",
     fAll: "All", fMine: "My patients", colName: "Patient", colWeek: "Week", colDoctor: "Doctor", colLast: "Last check-in", col14: "14 days", back: "All patients",
     attention: "Needs attention today", seeAll: "See all", noMatches: "No patients match", allCalm: "Nobody needs attention right now", hello: "Good day",
@@ -37,6 +39,8 @@ const T = {
     inviteTitle: "Подключите телефон пациентки", inviteSub: "Она сканирует код камерой телефона, или вы отправляете ей ссылку. Приложение откроется в браузере, устанавливать ничего не нужно.", copy: "Скопировать ссылку", copied: "Скопировано", close: "Закрыть", invite: "Ссылка / QR",
     rulesBtn: "Клиническая основа", rulesTitle: "Клиническая основа уровней риска", rulesSub: "Уровень риска задают только эти {n} правил, покрытых {t} автотестами. ИИ объясняет уровень, но не может его понизить. Пороги требуют согласования с местными акушерами-гинекологами.",
     colRule: "Правило", colLogic: "Условие", colSource: "Источник", regError: "Проверьте имя и дату",
+    clinic14: "Вся клиника, последние 14 дней", clinic14sub: "Опросы по дням и уровням риска", missed: "Нет опроса", okLevel: "Стабильно", adherence: "Заполнение опросов", adherenceSub: "от ожидаемых опросов за 7 дней",
+    vBp: "Последнее давление", vWeight: "Вес", vMood: "Настроение сегодня", vAdh: "Опросы за 14 дней", vMeds: "Приём витаминов", vs7: "за 7 дней", days: "дн.", highBp: "выше 140/90",
     navOverview: "Обзор", navPatients: "Пациентки", navAlerts: "Оповещения", navRules: "Клиническая основа", search: "Поиск по имени, району или врачу…",
     fAll: "Все", fMine: "Мои пациентки", colName: "Пациентка", colWeek: "Неделя", colDoctor: "Врач", colLast: "Последний опрос", col14: "14 дней", back: "Все пациентки",
     attention: "Сегодня требуют внимания", seeAll: "Показать все", noMatches: "Ничего не найдено", allCalm: "Сейчас никто не требует внимания", hello: "Добрый день",
@@ -58,6 +62,8 @@ const T = {
     inviteTitle: "Onaning telefonini ulang", inviteSub: "U kodni telefon kamerasi bilan skanerlaydi yoki siz havolani yuborasiz. Ilova brauzerda ochiladi, hech narsa o'rnatish shart emas.", copy: "Havolani nusxalash", copied: "Nusxalandi", close: "Yopish", invite: "Ilova havolasi / QR",
     rulesBtn: "Klinik asos", rulesTitle: "Xavf darajalarining klinik asosi", rulesSub: "Xavf darajasini faqat shu {n} ta qoida belgilaydi, ular {t} ta avtomatik test bilan qoplangan. AI darajani tushuntiradi, lekin hech qachon pasaytira olmaydi. Chegaralar mahalliy akusher-ginekologlar bilan tasdiqlanishi kerak.",
     colRule: "Qoida", colLogic: "Shart", colSource: "Manba", regError: "Ism va sanani tekshiring",
+    clinic14: "Butun klinika, so'nggi 14 kun", clinic14sub: "Kunlik so'rovnomalar xavf darajasi bo'yicha", missed: "To'ldirilmagan", okLevel: "Barqaror", adherence: "So'rovnoma to'ldirish", adherenceSub: "so'nggi 7 kunda kutilgan so'rovnomalardan",
+    vBp: "Oxirgi qon bosimi", vWeight: "Vazn", vMood: "Bugungi kayfiyat", vAdh: "So'rovnomalar, 14 kun", vMeds: "Vitamin qabul qilingan", vs7: "7 kunga nisbatan", days: "kun", highBp: "140/90 dan yuqori",
     navOverview: "Umumiy ko'rinish", navPatients: "Bemorlar", navAlerts: "Ogohlantirishlar", navRules: "Klinik asos", search: "Ism, tuman yoki shifokor bo'yicha qidirish…",
     fAll: "Hammasi", fMine: "Mening bemorlarim", colName: "Bemor", colWeek: "Hafta", colDoctor: "Shifokor", colLast: "Oxirgi so'rovnoma", col14: "14 kun", back: "Barcha bemorlar",
     attention: "Bugun e'tibor talab qiladi", seeAll: "Hammasini ko'rish", noMatches: "Mos bemor topilmadi", allCalm: "Hozir hech kim e'tibor talab qilmayapti", hello: "Xayrli kun",
@@ -181,11 +187,56 @@ function Overview() {
       kpi("", "users", ps.length, t("patients"), "all"), kpi("red", "alert-octagon", n((p) => p.level === "red"), t("red"), "red"),
       kpi("yellow", "alert-triangle", n((p) => p.level === "yellow"), t("yellow"), "yellow"), kpi("grey", "bell-off", n((p) => p.silent), t("silent"), "silent"),
       kpi("green", "check-circle", n((p) => p.last_checkin?.day === S.status.today) + " / " + ps.length, t("today"), "all")),
+    h("div", { class: "two wide-left" }, ClinicChart(ps), AdherenceCard(ps)),
     h("div", { class: "two" },
       h("section", { class: "card flat" }, h("h3", {}, t("alerts"), h("button", { class: "mini", onclick: () => go("alerts") }, t("seeAll") + " (" + S.list.alerts.length + ")")),
         S.list.alerts.length ? S.list.alerts.slice(0, 4).map(AlertCard) : h("div", { class: "empty" }, t("noAlerts"))),
       h("section", { class: "card flat" }, h("h3", {}, t("attention"), h("button", { class: "mini", onclick: () => go("patients") }, t("seeAll"))),
         attention.length ? h("table", { class: "ptable compact" }, attention.map(PatientRow)) : h("div", { class: "empty" }, t("allCalm")))));
+}
+
+const STATUS = { red: "#d03b3b", yellow: "#E9B021", green: "#2B9A66", none: "#E3E8EA" };  // reserved status colors, used only for state
+
+function ClinicChart(ps) {
+  const days = Array.from({ length: 14 }, (_, i) => { const x = new Date(S.status.today + "T12:00"); x.setDate(x.getDate() - 13 + i); return x.toISOString().slice(0, 10); });
+  const counts = days.map((_, i) => ({ red: 0, yellow: 0, green: 0, none: 0 }));
+  ps.forEach((p) => p.timeline.forEach((lv, i) => { counts[i][lv || "none"]++; }));
+  const W = 640, H = 200, L = 26, B = 24, Tp = 8, total = Math.max(1, ps.length), bw = (W - L) / 14, bar = Math.min(28, bw - 10);
+  const svg = h("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
+  const y = (v) => Tp + (H - Tp - B) * (1 - v / total);
+  [0, total / 2, total].forEach((v) => svg.append(h("line", { x1: L, x2: W, y1: y(v), y2: y(v), stroke: "#EEF1F2", "stroke-width": 1 }),
+    h("text", { x: L - 6, y: y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "#6B7A80" }, Math.round(v))));
+  const tip = h("div", { class: "tip" });
+  counts.forEach((c, i) => {
+    const x = L + i * bw + (bw - bar) / 2; let acc = 0;
+    ["green", "yellow", "red", "none"].forEach((k) => {
+      if (!c[k]) return;
+      const top = y(acc + c[k]), bottom = y(acc); acc += c[k];
+      svg.append(h("rect", { x, y: top + 1, width: bar, height: Math.max(1, bottom - top - 2), rx: 4, fill: STATUS[k] }));  // 2px surface gap between segments
+    });
+    if (i % 2 === 1 || i === 13) svg.append(h("text", { x: x + bar / 2, y: H - 6, "text-anchor": "middle", "font-size": 11, fill: i === 13 ? "#1E2A2E" : "#6B7A80", "font-weight": i === 13 ? 700 : 400 }, shortDay(days[i])));
+    svg.append(h("rect", { x: L + i * bw, y: Tp, width: bw, height: H - Tp - B, fill: "transparent",
+      onmousemove: (e) => { const box = svg.getBoundingClientRect();
+        tip.replaceChildren(h("b", {}, shortDay(days[i])), ...[["red", t("red")], ["yellow", t("yellow")], ["green", t("okLevel")], ["none", t("missed")]].map(([k, label]) =>
+          h("div", {}, h("i", { style: "background:" + STATUS[k] }), `${label}: ${c[k]}`)));
+        tip.style.display = "block"; tip.style.left = Math.min(box.width - 150, Math.max(0, (L + i * bw) / W * box.width + 14)) + "px"; },
+      onmouseleave: () => { tip.style.display = "none"; } }));
+  });
+  return h("section", { class: "card flat" }, h("h3", {}, h("span", {}, t("clinic14"), h("small", {}, t("clinic14sub")))),
+    h("div", { class: "chart", style: "position:relative" }, svg, tip,
+      h("div", { class: "legend" }, [["red", t("red")], ["yellow", t("yellow")], ["green", t("okLevel")], ["none", t("missed")]].map(([k, label]) => h("span", {}, h("i", { style: "height:8px;border-radius:3px;background:" + STATUS[k] }), label)))));
+}
+
+function AdherenceCard(ps) {
+  const slots = ps.length * 7, done = ps.reduce((n, p) => n + p.timeline.slice(7).filter(Boolean).length, 0);
+  const pct = slots ? Math.round(done / slots * 100) : 0;
+  const R = 52, C = 2 * Math.PI * R;
+  const ring = h("svg", { viewBox: "0 0 140 140", width: 140, height: 140, role: "img" },
+    h("circle", { cx: 70, cy: 70, r: R, fill: "none", stroke: "#EEF1F2", "stroke-width": 14 }),
+    h("circle", { cx: 70, cy: 70, r: R, fill: "none", stroke: "#0E6B78", "stroke-width": 14, "stroke-linecap": "round", "stroke-dasharray": `${C * pct / 100} ${C}`, transform: "rotate(-90 70 70)" }),
+    h("text", { x: 70, y: 78, "text-anchor": "middle", "font-size": 28, "font-weight": 800, fill: "#1E2A2E" }, pct + "%"));
+  return h("section", { class: "card flat adherence" }, h("h3", {}, t("adherence")), ring,
+    h("p", {}, h("b", {}, `${done} / ${slots}`), " ", t("adherenceSub")));
 }
 
 function PatientsPage() {
@@ -233,7 +284,7 @@ function lineChart({ days, series, min, max, step, threshold, unit }) {
   const ticks = []; for (let v = min; v <= max + 1e-9; v += gap) ticks.push(v);
   const svg = h("svg", { viewBox: `0 0 ${W} ${H}`, role: "img" });
   for (const v of ticks) {
-    svg.append(h("line", { x1: L, x2: W - R, y1: y(v), y2: y(v), stroke: "#EDE8DF", "stroke-width": 1 }),
+    svg.append(h("line", { x1: L, x2: W - R, y1: y(v), y2: y(v), stroke: "#EEF1F2", "stroke-width": 1 }),
       h("text", { x: L - 6, y: y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "#6B7A80" }, Math.round(v * 10) / 10));
   }
   days.forEach((d, i) => { if (i % 3 === (days.length - 1) % 3) svg.append(h("text", { x: x(i), y: H - 6, "text-anchor": "middle", "font-size": 11, fill: "#6B7A80" }, shortDay(d))); });
@@ -301,6 +352,7 @@ function renderDetail() {
       h("div", { class: "head-actions" },
         h("button", { class: "btn soft", onclick: () => showInvite(p.id) }, icon("lock", 15), t("invite")),
         h("a", { class: "btn", href: "tel:" + (p.phone || "").replace(/\s/g, "") }, icon("phone", 16), t("call") + " " + (p.phone || "")))),
+    Vitals(d, days, { sys, dia, weight, mood }),
     h("div", { class: "grid" },
       SummaryCard(),
       chartCard(t("bp"), () => lineChart({ days, min: bpMin, max: bpMax, step: 20, unit: "", series: [{ name: t("sys"), color: SERIES[0], values: sys }, { name: t("dia"), color: SERIES[1], values: dia }],
@@ -322,6 +374,24 @@ function renderDetail() {
         h("div", { class: "msgs" }, d.ai_messages.map((m) => h("div", { class: "msg " + (m.sender === "patient" ? "them" : "bot") }, m.text, h("small", {}, (m.sender === "ai" ? "Ona AI · " : "") + stamp(m.created_at)))))) : null));
   const box = $("clinic-msgs"); box.scrollTop = box.scrollHeight;
   if (focus) { const el = $("draft"); el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+}
+
+function Vitals(d, days, v) {
+  const lastIdx = (arr) => arr.reduce((acc, x, i) => (x != null ? i : acc), -1);
+  const tile = (ic, label, value, sub, tone) => h("div", { class: "vital " + (tone || "") }, h("div", { class: "kpi-icon" }, icon(ic, 18)),
+    h("div", {}, h("span", {}, label), h("b", {}, value), sub ? h("small", {}, sub) : null));
+  const b = lastIdx(v.sys), w = lastIdx(v.weight), m = lastIdx(v.mood);
+  const high = b >= 0 && (v.sys[b] >= 140 || v.dia[b] >= 90);
+  const weekAgo = w >= 0 ? v.weight.slice(0, Math.max(0, w - 5)).filter((x) => x != null).pop() : null;
+  const delta = weekAgo != null ? Math.round((v.weight[w] - weekAgo) * 10) / 10 : null;
+  const recent = d.checkins.filter((c) => days.includes(c.day));
+  const meds = recent.filter((c) => c.answers.meds === "yes").length;
+  return h("div", { class: "vitals" },
+    tile("activity", t("vBp"), b >= 0 ? `${v.sys[b]}/${v.dia[b]}` : "—", b >= 0 ? (high ? t("highBp") : shortDay(days[b])) : null, high ? "red" : ""),
+    tile("heart", t("vWeight"), w >= 0 ? v.weight[w] + " kg" : "—", delta != null ? `${delta > 0 ? "+" : ""}${delta} kg ${t("vs7")}` : null, delta != null && delta > 2 ? "yellow" : ""),
+    tile("user", t("vMood"), m === 13 ? v.mood[m] + " / 5" : "—", null, m === 13 && v.mood[m] <= 2 ? "yellow" : ""),
+    tile("calendar", t("vAdh"), `${recent.length} / 14`, null, recent.length < 8 ? "yellow" : "green"),
+    tile("check-circle", t("vMeds"), recent.length ? `${meds} / ${recent.length} ${t("days")}` : "—", null, recent.length && meds / recent.length < 0.7 ? "yellow" : ""));
 }
 
 function SummaryCard() {
