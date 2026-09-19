@@ -82,15 +82,18 @@ function renderTop() {
   const live = S.status.ai.mode === "live";
   $("top").replaceChildren(
     h("div", { class: "logo" }, h("img", { src: "/static/icon.svg", alt: "" }), h("div", {}, S.status.clinic.name, h("small", {}, t("sub")))),
-    h("div", { class: "stats" },
-      h("div", { class: "stat" }, h("b", {}, ps.length), h("span", {}, t("patients"))),
-      h("div", { class: "stat red" }, h("b", {}, n((p) => p.level === "red")), h("span", {}, t("red"))),
-      h("div", { class: "stat yellow" }, h("b", {}, n((p) => p.level === "yellow")), h("span", {}, t("yellow"))),
-      h("div", { class: "stat" }, h("b", {}, n((p) => p.silent)), h("span", {}, t("silent"))),
-      h("div", { class: "stat" }, h("b", {}, n((p) => p.last_checkin?.day === S.status.today)), h("span", {}, t("today")))),
-    h("span", { class: "chip" + (live ? " live" : ""), title: S.status.ai.last_error || "" }, live ? "● " + t("live") + " · " + S.status.ai.model : "○ " + t("offline")),
-    LangSwitch(),
-    h("div", { class: "user" }, h("span", {}, "👩‍⚕️ " + S.user.name), h("button", { class: "mini", onclick: logout }, t("logout"))));
+    h("div", { class: "top-right" },
+      h("span", { class: "chip" + (live ? " live" : ""), title: S.status.ai.last_error || "" }, h("i", { class: "pulse-dot" }), live ? t("live") + " · " + S.status.ai.model : t("offline")),
+      LangSwitch(),
+      h("div", { class: "user" }, h("span", { class: "user-avatar" }, icon("user", 16)), h("span", { class: "user-name" }, S.user.name),
+        h("button", { class: "icon-btn", onclick: logout, title: t("logout"), "aria-label": t("logout") }, icon("logout", 17)))));
+  const kpi = (cls, ic, value, label) => h("div", { class: "kpi " + cls }, h("div", { class: "kpi-icon" }, icon(ic, 20)), h("div", {}, h("b", {}, value), h("span", {}, label)));
+  $("kpis").replaceChildren(
+    kpi("", "users", ps.length, t("patients")),
+    kpi("red", "alert-octagon", n((p) => p.level === "red"), t("red")),
+    kpi("yellow", "alert-triangle", n((p) => p.level === "yellow"), t("yellow")),
+    kpi("grey", "bell-off", n((p) => p.silent), t("silent")),
+    kpi("green", "check-circle", n((p) => p.last_checkin?.day === S.status.today) + " / " + ps.length, t("today")));
 }
 
 function renderList() {
@@ -98,18 +101,18 @@ function renderList() {
   $("list").replaceChildren(...[
     h("div", { class: "section-title" }, h("span", {}, t("alerts")), h("span", {}, alerts.length || "")),
     alerts.length ? alerts.map((a) => h("div", { class: "alert " + a.level, onclick: () => select(a.patient_id) },
-      h("div", { class: "who" }, h("span", {}, (a.level === "red" ? "🚨 " : "⚠️ ") + a.patient_name), h("time", {}, stamp(a.created_at))),
+      h("div", { class: "who" }, h("span", { class: "who-name" }, h("i", { class: "alert-icon" }, icon(a.level === "red" ? "alert-octagon" : "alert-triangle", 15)), a.patient_name), h("time", {}, stamp(a.created_at))),
       h("div", { class: "why" }, t("source_" + a.source) + (a.reasons.length ? " — " + reasonsText(a.reasons) : "")),
       a.note ? h("div", { class: "why" }, "“" + a.note + "”") : null,
       h("div", { class: "acts" }, h("button", { class: "mini" }, t("view")),
-        h("button", { class: "mini ok", onclick: async (e) => { e.stopPropagation(); await api(`/api/alerts/${a.id}/ack`, {}); refresh(true); } }, "✓ " + t("ack")))))
-      : h("div", { class: "empty" }, "✓ " + t("noAlerts")),
+        h("button", { class: "mini ok", onclick: async (e) => { e.stopPropagation(); await api(`/api/alerts/${a.id}/ack`, {}); refresh(true); } }, icon("check", 14), t("ack")))))
+      : h("div", { class: "empty" }, t("noAlerts")),
     h("div", { class: "section-title", style: "margin-top:18px" }, h("span", {}, t("all"))),
     S.list.patients.map((p) => h("button", { class: "patient" + (p.id === S.pid ? " on" : ""), onclick: () => select(p.id) },
       h("i", { class: "lv " + p.level }),
       h("div", { style: "min-width:0" },
         h("div", { class: "name" }, p.name, p.open_alerts ? h("span", { class: "badge " + (p.level === "red" ? "red" : "") }, p.open_alerts) : null),
-        h("div", { class: "sub" }, `${p.week} ${t("wk")} · ` + (p.silent ? "🔕 " + (p.silent_days == null ? t("never") : t("silentFor", { n: p.silent_days }))
+        h("div", { class: "sub" }, `${p.week} ${t("wk")} · ` + (p.silent ? (p.silent_days == null ? t("never") : t("silentFor", { n: p.silent_days }))
           : p.last_checkin.reasons.length ? reasonsText(p.last_checkin.reasons) : p.district))),
       h("div", { class: "spark" }, p.timeline.map((lv) => h("i", { class: lv || "" })))))].flat());
 }
@@ -170,7 +173,7 @@ function padRange(values, step, floorMin, ceilMax) {
 
 function renderDetail() {
   const root = $("detail");
-  if (!S.detail) return root.replaceChildren(h("div", { class: "welcome" }, h("div", { style: "font-size:42px" }, "👩‍⚕️"), h("div", {}, t("pick"))));
+  if (!S.detail) return root.replaceChildren(h("div", { class: "welcome" }, icon("users", 44), h("div", {}, t("pick"))));
   const d = S.detail, p = d.patient;
   const days = Array.from({ length: 14 }, (_, i) => { const x = new Date(S.status.today + "T12:00"); x.setDate(x.getDate() - 13 + i); return x.toISOString().slice(0, 10); });
   const byDay = Object.fromEntries(d.checkins.map((c) => [c.day, c.answers]));
@@ -182,13 +185,13 @@ function renderDetail() {
 
   root.replaceChildren(
     h("div", { class: "head" },
-      h("div", { class: "avatar" }, initials),
+      h("div", { class: "avatar " + p.level }, initials),
       h("div", {}, h("h1", {}, p.name),
         h("div", { class: "meta" }, `${p.age} ${t("years")} · ${t("week")} ${p.week} · ${t("due")} ${shortDay(p.due_date)} · ${p.district} · ${p.doctor}`),
         h("div", { class: "tags" }, h("span", { class: "tag " + p.level }, t(p.level === "green" ? "trend_stable" : p.level)),
-          p.silent ? h("span", { class: "tag" }, "🔕 " + (p.silent_days == null ? t("never") : t("silentFor", { n: p.silent_days }))) : null,
+          p.silent ? h("span", { class: "tag" }, icon("bell-off", 12), p.silent_days == null ? t("never") : t("silentFor", { n: p.silent_days })) : null,
           p.risk_factors.map((r) => h("span", { class: "tag risk" }, r)))),
-      h("a", { class: "btn", href: "tel:" + (p.phone || "").replace(/\s/g, "") }, "📞 " + t("call") + " " + (p.phone || ""))),
+      h("a", { class: "btn", href: "tel:" + (p.phone || "").replace(/\s/g, "") }, icon("phone", 16), t("call") + " " + (p.phone || ""))),
     h("div", { class: "grid" },
       SummaryCard(),
       chartCard(t("bp"), () => lineChart({ days, min: bpMin, max: bpMax, step: 20, unit: "", series: [{ name: t("sys"), color: SERIES[0], values: sys }, { name: t("dia"), color: SERIES[1], values: dia }],
@@ -222,8 +225,8 @@ function SummaryCard() {
         h("div", {}, h("h4", {}, t("actions")), h("ul", {}, s.suggested_actions.map((c) => h("li", {}, c))))),
       h("div", { class: "src" }, t(s.source === "ai" ? "srcClaude" : "srcTemplate"))];
   return h("section", { class: "card wide ai" },
-    h("h3", {}, h("span", {}, "✨ " + t("aiTitle"), s && !S.summaryBusy ? h("span", { class: "tag " + ({ worsening: "red", improving: "green" }[s.trend] || ""), style: "margin-left:10px;text-transform:none;letter-spacing:0" }, ({ worsening: "↗ ", improving: "↘ ", stable: "→ " }[s.trend]) + t("trend_" + s.trend)) : null),
-      h("button", { class: "mini", disabled: S.summaryBusy, onclick: () => loadSummary(true) }, "↻ " + t("regenerate"))), ...body);
+    h("h3", {}, h("span", { class: "ai-title" }, icon("sparkles", 16), t("aiTitle"), s && !S.summaryBusy ? h("span", { class: "tag " + ({ worsening: "red", improving: "green" }[s.trend] || ""), style: "margin-left:10px;text-transform:none;letter-spacing:0" }, ({ worsening: "↗ ", improving: "↘ ", stable: "→ " }[s.trend]) + t("trend_" + s.trend)) : null),
+      h("button", { class: "mini", disabled: S.summaryBusy, onclick: () => loadSummary(true) }, icon("refresh", 13), t("regenerate"))), ...body);
 }
 
 // ---- actions -----------------------------------------------------------------
@@ -310,7 +313,7 @@ function showLogin(error) {
     h("label", { for: "login-user" }, t("username")), name,
     h("label", { for: "login-pass" }, t("password")), pass,
     problem, button,
-    h("button", { type: "button", class: "login-hint", onclick: () => { name.value = DEMO_LOGIN.u; pass.value = DEMO_LOGIN.p; } }, "💡 " + t("demoHint", DEMO_LOGIN)));
+    h("button", { type: "button", class: "login-hint", onclick: () => { name.value = DEMO_LOGIN.u; pass.value = DEMO_LOGIN.p; } }, icon("lightbulb", 15), t("demoHint", DEMO_LOGIN)));
   $("login").replaceChildren(h("div", { class: "login-langs" }, LangSwitch()), form);
   (name.value ? pass : name).focus();
 }
@@ -324,6 +327,7 @@ async function logout() {
 async function start() {
   document.body.classList.remove("signed-out");
   $("login").replaceChildren();
+  $("kpis").replaceChildren();
   [S.meta, S.status, S.list] = await Promise.all([api("/api/questions"), api("/api/status"), api("/api/patients")]);
   renderTop(); renderList(); renderDetail();
   const initial = +location.hash.slice(1) || S.list.patients[0]?.id;

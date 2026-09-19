@@ -296,6 +296,7 @@ def lan_ip():
 def main():
     port = int(sys.argv[1]) if len(sys.argv) > 1 else int(os.environ.get("PORT", 8000))
     mimetypes.add_type("application/manifest+json", ".webmanifest")
+    mimetypes.add_type("font/woff2", ".woff2")
     fresh = not os.path.exists(db.DB_PATH)
     db.init()
     if fresh or not db.list_patients():

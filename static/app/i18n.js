@@ -23,6 +23,8 @@ const I18N = {
     mood: "Kayfiyat", bp: "Bosim", weight: "Vazn", sys: "Yuqori", dia: "Pastki",
     disclaimer: "Ona tibbiy tashxis qo'ymaydi. Shoshilinch holatda 103 ga qo'ng'iroq qiling.",
     error: "Aloqa xatosi. Qayta urinib ko'ring.",
+    askAI: "Ona AI'dan so'rash", writeDoctor: "Shifokorga yozish", tipTitle: "Bugungi maslahat", more: "Batafsil", less: "Yopish",
+    tips: ["Ko'ngil aynisa, oz-ozdan va tez-tez ovqatlaning; ertalab quruq non yoki pechenye yordam beradi.", "Har kuni 30 daqiqa sayr qiling va temirga boy taomlarni C vitamini bilan birga iste'mol qiling.", "Bolangiz harakatini har kuni kuzating. Odatdagidan kamaysa, kutmasdan klinikaga qo'ng'iroq qiling."],
     sizes: ["ko'knori urug'i", "olcha", "limon", "olma", "mango", "makkajo'xori", "baqlajon", "kokos", "qovun", "tarvuz"],
   },
   ru: {
@@ -48,6 +50,8 @@ const I18N = {
     mood: "Настроение", bp: "Давление", weight: "Вес", sys: "Верхнее", dia: "Нижнее",
     disclaimer: "Ona не ставит диагнозы. В экстренной ситуации звоните 103.",
     error: "Ошибка связи. Попробуйте ещё раз.",
+    askAI: "Спросить Ona AI", writeDoctor: "Написать врачу", tipTitle: "Совет дня", more: "Подробнее", less: "Свернуть",
+    tips: ["При тошноте ешьте понемногу и часто; утром помогают сухарик или печенье.", "Гуляйте по 30 минут в день и сочетайте продукты с железом с витамином C.", "Следите за шевелениями малыша каждый день. Если их стало меньше обычного — не ждите, звоните в клинику."],
     sizes: ["маковое зёрнышко", "вишня", "лимон", "яблоко", "манго", "кукурузный початок", "баклажан", "кокос", "дыня", "арбуз"],
   },
   en: {
@@ -73,6 +77,8 @@ const I18N = {
     mood: "Mood", bp: "BP", weight: "Weight", sys: "Upper", dia: "Lower",
     disclaimer: "Ona does not diagnose. In an emergency call 103.",
     error: "Connection error. Please try again.",
+    askAI: "Ask Ona AI", writeDoctor: "Write to doctor", tipTitle: "Tip of the day", more: "Read more", less: "Show less",
+    tips: ["If you feel sick, eat small amounts often; a dry cracker in the morning helps.", "Walk 30 minutes a day and pair iron-rich foods with vitamin C.", "Notice your baby's movements every day. If they slow down, do not wait: call your clinic."],
     sizes: ["a poppy seed", "a cherry", "a lemon", "an apple", "a mango", "an ear of corn", "an aubergine", "a coconut", "a melon", "a watermelon"],
   },
 };

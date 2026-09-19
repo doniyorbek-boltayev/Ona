@@ -12,7 +12,7 @@ const S = {
 };
 const FACES = ["😣", "🙁", "😐", "🙂", "😄"];
 const FACES_INVERTED = ["😌", "🙂", "😐", "😟", "😰"];
-const LEVEL_ICON = { green: "🌿", yellow: "⚠️", red: "🚨" };
+const LEVEL_ICON = { green: "check-circle", yellow: "alert-triangle", red: "alert-octagon" };
 
 const view = document.getElementById("view");
 const tabs = document.getElementById("tabs");
@@ -70,8 +70,8 @@ function render() {
   view.replaceChildren(S.busy ? Analysing() : S.result ? Result() : S.flow ? Flow() : { home: Home, ai: AiChat, clinic: ClinicChat, history: History }[S.tab]());
   const unread = S.data.clinic_messages.length && S.data.clinic_messages.at(-1).sender === "clinic"
     && S.data.clinic_messages.at(-1).id > +(localStorage.getItem("ona.seen." + S.pid) || 0);
-  tabs.replaceChildren(...[["home", "🏠", "tabHome"], ["ai", "✨", "tabAI"], ["clinic", "👩‍⚕️", "tabClinic"], ["history", "📅", "tabHistory"]].map(([id, ic, key]) =>
-    h("button", { class: S.tab === id ? "on" : "", onclick: () => go(id) }, h("span", { class: "ic" }, ic), t(key), id === "clinic" && unread && S.tab !== "clinic" ? h("i", { class: "dot" }) : null)));
+  tabs.replaceChildren(...[["home", "home", "tabHome"], ["ai", "sparkles", "tabAI"], ["clinic", "message", "tabClinic"], ["history", "calendar", "tabHistory"]].map(([id, ic, key]) =>
+    h("button", { class: S.tab === id ? "on" : "", onclick: () => go(id) }, h("span", { class: "ic" }, icon(ic, 22)), t(key), id === "clinic" && unread && S.tab !== "clinic" ? h("i", { class: "dot" }) : null)));
   const msgs = view.querySelector(".msgs");
   if (msgs) msgs.scrollTop = msgs.scrollHeight;
 }
@@ -94,31 +94,41 @@ function Home() {
   const size = I18N[S.lang].sizes[SIZE_BY_WEEK.find(([w]) => p.week <= w)[1]];
   const today = S.data.today;
   const lastClinic = S.data.clinic_messages.filter((m) => m.sender === "clinic").at(-1);
+  const tip = I18N[S.lang].tips[p.week < 14 ? 0 : p.week < 28 ? 1 : 2];
+  const long = today && today.feedback && today.feedback.length > 150;
 
   return h("div", {},
     h("header", { class: "hero" },
       h("div", { class: "hero-top" }, h("div", { class: "brand" }, h("img", { src: "/static/icon.svg", alt: "" }), "Ona"), Langs()),
-      h("h1", {}, `${t("hello")}, ${p.name.split(" ")[0]}!`),
-      h("p", {}, `${S.data.clinic.name} · ${p.doctor}`)),
+      h("div", { class: "hello" }, h("div", { class: "avatar" }, p.name.split(" ").map((w) => w[0]).join("").slice(0, 2)),
+        h("div", {}, h("h1", {}, `${t("hello")}, ${p.name.split(" ")[0]}!`), h("p", {}, `${S.data.clinic.name} · ${p.doctor}`)))),
     h("div", { class: "stack lift" },
       h("section", { class: "card row" },
         h("div", { class: "ring", style: `--p:${Math.min(100, p.week / 40 * 100)}` }, h("div", {}, h("b", {}, p.week), h("span", {}, t("week")))),
         h("div", { class: "grow" }, h("h3", {}, t("weekOf", { w: p.week })), h("div", { class: "muted" }, t("daysLeft", { d: daysLeft })), h("div", { class: "muted" }, t("babySize", { x: size })))),
       today
-        ? h("section", { class: "card" },
-            h("div", { class: "row" }, h("div", { style: "font-size:34px" }, LEVEL_ICON[today.level]),
-              h("div", { class: "grow" }, h("h3", {}, t("doneToday")), h("span", { class: "pill " + today.level }, t("level_" + today.level)))),
-            today.feedback ? h("p", { class: "feedback" }, today.feedback) : null,
-            h("button", { class: "btn ghost", style: "margin-top:14px", onclick: startFlow }, t("redo")))
+        ? h("section", { class: "card status " + today.level },
+            h("div", { class: "row" }, h("div", { class: "badge " + today.level }, icon(LEVEL_ICON[today.level], 26)),
+              h("div", { class: "grow" }, h("div", { class: "muted" }, t("doneToday")), h("h3", {}, t("level_" + today.level)))),
+            today.feedback ? h("p", { class: "feedback" + (long && !S.expanded ? " clamp" : "") }, today.feedback) : null,
+            long ? h("button", { class: "link", onclick: () => { S.expanded = !S.expanded; render(); } }, t(S.expanded ? "less" : "more")) : null,
+            today.level !== "green" ? h("a", { class: "btn" + (today.level === "red" ? " danger" : ""), style: "margin-top:12px", href: "tel:" + S.data.clinic.phone.replace(/\s/g, "") }, icon("phone", 18), t("callClinic")) : null,
+            h("button", { class: "btn plain small", onclick: startFlow }, t("redo")))
         : h("section", { class: "card cta" },
-            h("div", { class: "row" }, h("div", { style: "font-size:36px" }, "📝"),
+            h("div", { class: "row" }, h("div", { class: "badge glass" }, icon("clipboard", 26)),
               h("div", { class: "grow" }, h("h3", {}, t("checkinTitle")), h("div", { class: "muted" }, t("checkinSub")))),
-            h("button", { class: "btn", onclick: startFlow }, t("start"))),
+            h("button", { class: "btn", onclick: startFlow }, t("start"), icon("arrow-right", 18))),
+      h("div", { class: "quick" },
+        h("button", { onclick: () => go("ai") }, h("div", { class: "badge soft" }, icon("sparkles", 20)), t("askAI")),
+        h("button", { onclick: () => go("clinic") }, h("div", { class: "badge soft" }, icon("message", 20)), t("writeDoctor"))),
       h("section", { class: "card" },
-        h("div", { class: "row", style: "justify-content:space-between" }, h("h3", {}, t("last14")), h("span", { class: "pill" }, "🔥 " + t("streak", { n: S.data.streak }))),
+        h("div", { class: "row", style: "justify-content:space-between" }, h("h3", {}, t("last14")), h("span", { class: "pill" }, icon("flame", 14), t("streak", { n: S.data.streak }))),
         h("div", { class: "dots" }, p.timeline.map((lv) => h("i", { class: lv || "" })))),
-      lastClinic ? h("section", { class: "card", onclick: () => go("clinic") },
-        h("div", { class: "muted" }, "👩‍⚕️ " + t("fromClinic")), h("p", { style: "margin:6px 0 0" }, lastClinic.text)) : null,
+      lastClinic ? h("section", { class: "card tap", onclick: () => go("clinic") },
+        h("div", { class: "row" }, h("div", { class: "badge soft" }, icon("user", 20)),
+          h("div", { class: "grow" }, h("div", { class: "muted" }, t("fromClinic") + " · " + p.doctor), h("p", { style: "margin:2px 0 0" }, lastClinic.text)))) : null,
+      h("section", { class: "card tip" }, h("div", { class: "row", style: "align-items:flex-start" }, h("div", { class: "badge warm" }, icon("lightbulb", 20)),
+        h("div", { class: "grow" }, h("div", { class: "muted" }, t("tipTitle")), h("p", { style: "margin:2px 0 0" }, tip)))),
       h("p", { class: "foot" }, t("disclaimer"))));
 }
 
@@ -193,7 +203,7 @@ function Flow() {
 
   const auto = q.type === "scale" || q.type === "choice";
   return h("div", { class: "flow" },
-    h("div", { class: "flow-top" }, h("button", { onclick: () => step(-1), "aria-label": t("back") }, "←"),
+    h("div", { class: "flow-top" }, h("button", { onclick: () => step(-1), "aria-label": t("back") }, icon("arrow-left", 20)),
       h("div", { class: "bar" }, h("i", { style: `width:${(S.flow.i + 1) / qs.length * 100}%` })),
       h("span", { class: "muted" }, `${S.flow.i + 1}/${qs.length}`)),
     h("div", { class: "q" }, h("h2", {}, loc(q.text)), q.hint ? h("p", { class: "hint" }, loc(q.hint)) : null, body),
@@ -217,17 +227,17 @@ async function submit() {
 }
 
 function Analysing() {
-  return h("div", { class: "center" }, h("div", { class: "pulse" }, "✨"), h("h2", { style: "margin:0" }, t("analysing")), h("div", { class: "muted" }, t("analysingSub")));
+  return h("div", { class: "center" }, h("div", { class: "pulse" }, icon("sparkles", 40)), h("h2", { style: "margin:0" }, t("analysing")), h("div", { class: "muted" }, t("analysingSub")));
 }
 
 function Result() {
   const r = S.result, clinic = S.data.clinic;
   return h("div", { class: "result" },
-    h("div", { class: "verdict " + r.level }, h("div", { class: "big" }, LEVEL_ICON[r.level]), h("h2", {}, t("level_" + r.level)), h("p", {}, "✓ " + t("sharedWithClinic"))),
-    h("section", { class: "card" }, h("span", { class: "pill" }, "✨ " + t(r.source === "ai" ? "aiBadge" : "offlineBadge")), h("p", { class: "feedback" }, r.feedback)),
+    h("div", { class: "verdict " + r.level }, h("div", { class: "big" }, icon(LEVEL_ICON[r.level], 40)), h("h2", {}, t("level_" + r.level)), h("p", {}, "✓ " + t("sharedWithClinic"))),
+    h("section", { class: "card" }, h("span", { class: "pill" }, icon("sparkles", 14), t(r.source === "ai" ? "aiBadge" : "offlineBadge")), h("p", { class: "feedback" }, r.feedback)),
     r.reasons.length ? h("section", { class: "card" }, h("h3", {}, t("whatWeNoticed")),
       h("ul", { class: "reasons" }, r.reasons.map((code) => h("li", {}, h("i", { class: "lv " + S.meta.reasons[code].level }), loc(S.meta.reasons[code].text))))) : null,
-    r.level !== "green" ? h("a", { class: "btn" + (r.level === "red" ? " danger" : ""), href: "tel:" + clinic.phone.replace(/\s/g, "") }, "📞 " + t("callClinic")) : null,
+    r.level !== "green" ? h("a", { class: "btn" + (r.level === "red" ? " danger" : ""), href: "tel:" + clinic.phone.replace(/\s/g, "") }, icon("phone", 18), t("callClinic")) : null,
     r.level === "red" ? h("a", { class: "btn ghost", href: "tel:103" }, t("call103")) : null,
     h("button", { class: "btn " + (r.level === "green" ? "" : "plain"), onclick: () => { S.result = null; S.tab = "home"; render(); } }, t("home")));
 }
@@ -238,7 +248,7 @@ function Chat({ title, icon, intro, messages, mine, placeholder, suggestions, on
   const input = h("input", { placeholder, enterkeyhint: "send", onkeydown: (e) => { if (e.key === "Enter") send(); } });
   const send = (text) => { const v = (text || input.value).trim(); if (v && !S.sending) { input.value = ""; onSend(v); } };
   return h("div", { class: "chat" },
-    h("div", { class: "page-title" }, icon, " ", title),
+    h("div", { class: "page-title" }, h("div", { class: "badge soft" }, window.icon(icon, 20)), title),
     h("div", { class: "msgs" },
       intro ? h("div", { class: "msg them" }, intro) : null,
       !intro && !messages.length ? h("div", { class: "muted", style: "text-align:center;margin-top:40px" }, t("noMessages")) : null,
@@ -246,12 +256,12 @@ function Chat({ title, icon, intro, messages, mine, placeholder, suggestions, on
         : h("div", { class: "msg " + (m.sender === mine ? "me" : "them") }, m.text, m.created_at ? h("time", {}, fmtTime(m.created_at)) : null)),
       typing ? h("div", { class: "msg them typing" }, h("span"), h("span"), h("span")) : null),
     suggestions && messages.length < 2 ? h("div", { class: "sugs" }, suggestions.map((s) => h("button", { onclick: () => send(s) }, s))) : null,
-    h("div", { class: "composer" }, input, h("button", { onclick: () => send(), "aria-label": t("send") }, "➤")));
+    h("div", { class: "composer" }, input, h("button", { onclick: () => send(), "aria-label": t("send") }, window.icon("send", 19))));
 }
 
 function AiChat() {
   return Chat({
-    title: "Ona AI", icon: "✨", intro: t("aiIntro"), mine: "patient", typing: S.sending,
+    title: "Ona AI", icon: "sparkles", intro: t("aiIntro"), mine: "patient", typing: S.sending,
     messages: [...S.data.ai_messages, ...(S.pending ? [S.pending] : [])].flatMap((m) => [m, ...S.aiExtra.filter((n) => n.after === m.id)]),
     placeholder: t("aiPlaceholder"), suggestions: [t("sug1"), t("sug2"), t("sug3")],
     onSend: async (text) => {
@@ -259,7 +269,7 @@ function AiChat() {
       try {
         const res = await api("/api/chat", { patient_id: S.pid, lang: S.lang, text });
         await load();
-        if (res.escalate !== "none") S.aiExtra.push({ after: S.data.ai_messages.at(-1).id, note: res.escalate, text: "🔔 " + t("escalated_" + res.escalate) });
+        if (res.escalate !== "none") S.aiExtra.push({ after: S.data.ai_messages.at(-1).id, note: res.escalate, text: t("escalated_" + res.escalate) });
       } catch (e) { toast(t("error")); }
       S.pending = null; S.sending = false; render();
     },
@@ -268,7 +278,7 @@ function AiChat() {
 
 function ClinicChat() {
   return Chat({
-    title: S.data.patient.doctor, icon: "👩‍⚕️", mine: "patient", messages: S.data.clinic_messages, placeholder: t("clinicPlaceholder"),
+    title: S.data.patient.doctor, icon: "user", mine: "patient", messages: S.data.clinic_messages, placeholder: t("clinicPlaceholder"),
     onSend: async (text) => {
       try { S.data.clinic_messages = (await api(`/api/patients/${S.pid}/messages`, { sender: "patient", text })).messages; } catch (e) { toast(t("error")); }
       render();
@@ -280,7 +290,7 @@ function ClinicChat() {
 
 function History() {
   const list = S.data.checkins;
-  return h("div", {}, h("div", { class: "page-title" }, "📅 ", t("tabHistory")),
+  return h("div", {}, h("div", { class: "page-title" }, h("div", { class: "badge soft" }, icon("calendar", 20)), t("tabHistory")),
     h("div", { class: "stack hist" }, list.length ? list.map((c) => {
       const a = c.answers, sym = (a.symptoms || []).filter((s) => s !== "none").map((s) => loc(S.meta.symptoms[s]));
       return h("div", { class: "card" },

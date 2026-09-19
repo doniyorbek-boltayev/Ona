@@ -83,12 +83,16 @@ Phone on the same Wi-Fi: open `http://<laptop-ip>:8000/` (the server prints the 
 - [x] 6. End-to-end verification in a browser, fix bugs
 - [x] 7. `README.md` with a 3-minute demo script for the judges
 - [x] 9. OpenAI provider (`gpt-5-mini`) alongside Anthropic; `.env` template; provider-neutral UI labels
+- [x] 10. Design pass: self-hosted Manrope font (`static/fonts/`), shared SVG icon set (`static/icons.js`) instead of
+  emoji in navigation/alerts/buttons, new home screen (status card, quick actions, daily tip), dashboard KPI strip
 - [x] 8. Clinic login: staff accounts (PBKDF2 hashes), cookie sessions, protected dashboard endpoints, sign-in screen
 
 ## Conventions
 
 - Risk levels are the strings `green`, `yellow`, `red` everywhere.
 - Answers are stored as one JSON object per check-in keyed by question id.
+- UI chrome uses `icon(name, size)` from `static/icons.js`; emoji stay only where they carry meaning for the mother
+  (mood faces, symptom chips).
 - All user-facing strings go through the i18n dictionaries (`questions.py`, `static/app/i18n.js`);
   Uzbek uses Latin script.
 - Never put medical diagnosis in the mother's UI — only "contact your clinic / call 103".
