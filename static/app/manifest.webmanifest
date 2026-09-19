@@ -1,0 +1,9 @@
+{
+  "name": "Ona — homiladorlik hamrohi",
+  "short_name": "Ona",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF7F1",
+  "theme_color": "#0E6B78",
+  "icons": [{ "src": "/static/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
