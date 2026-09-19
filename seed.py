@@ -16,7 +16,7 @@ import db
 import triage
 
 DAYS = 14
-CLINIC = {"name": "Xorazm Ona Klinikasi", "city": "Urganch", "phone": "+998 62 000 00 00"}
+CLINIC = {"name": "Xorazm Nigoh Klinikasi", "city": "Urganch", "phone": "+998 62 000 00 00"}
 
 
 def _base(rng, weight, day_index, gain_per_week=0.4):

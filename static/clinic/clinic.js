@@ -131,7 +131,7 @@ function renderSide() {
   const nav = [["overview", "home", t("navOverview")], ["patients", "users", t("navPatients"), S.list.patients.length],
     ["alerts", "bell", t("navAlerts"), S.list.alerts.length, S.list.alerts.some((a) => a.level === "red") ? "red" : "yellow"], ["rules", "clipboard", t("navRules")]];
   $("side").replaceChildren(
-    h("div", { class: "logo" }, h("img", { src: "/static/icon.svg", alt: "" }), h("div", { class: "label" }, S.status.clinic.name, h("small", {}, t("sub")))),
+    h("div", { class: "logo" }, h("img", { src: "/static/icon.svg", alt: "" }), h("div", { class: "label" }, "Nigoh AI", h("small", {}, S.status.clinic.name))),
     h("div", { class: "nav" }, nav.map(([view, ic, label, count, tone]) => h("button", { class: (S.view === view || (view === "patients" && S.view === "patient")) ? "on" : "", onclick: () => go(view), title: label },
       icon(ic, 19), h("span", { class: "label" }, label), count ? h("span", { class: "count " + (tone || "") }, count) : null))),
     h("div", { class: "side-foot" },
