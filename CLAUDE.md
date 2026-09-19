@@ -84,6 +84,8 @@ Phone on the same Wi-Fi: open `http://<laptop-ip>:8000/` (the server prints the 
 - [x] 6. End-to-end verification in a browser, fix bugs
 - [x] 7. `README.md` with a 3-minute demo script for the judges
 - [x] 9. OpenAI provider (`gpt-5-mini`) alongside Anthropic; `.env` template; provider-neutral UI labels
+- [x] 12. Dashboard restructured around a left sidebar: Overview (KPIs, alerts, who needs attention), Bemorlar (searchable,
+  filterable table → patient page), Ogohlantirishlar, Klinik asos; hash routing (`#patients`, `#patient/3`)
 - [x] 11. Patient registration from the dashboard (due date or LMP → Naegele), invite link + QR code (`segno`), mother app opens by `?k=<secret>`;
   "Clinical basis" panel listing every triage rule with its condition and source (`triage.catalogue()`)
 - [x] 10. Design pass: self-hosted Manrope font (`static/fonts/`), shared SVG icon set (`static/icons.js`) instead of

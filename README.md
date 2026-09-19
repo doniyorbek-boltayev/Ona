@@ -55,11 +55,11 @@ Open `/demo` on the projector and sign in to the dashboard once (tap the demo-ac
 lasts 12 hours and survives **Reset demo data**. If needed, press Reset first.
 
 1. **The problem (20 s).** Between antenatal visits a clinic is blind for 2–4 weeks. Pre-eclampsia and
-   reduced fetal movement develop in days. Point at the dashboard: 10 patients, sorted by risk.
-2. **The clinic's morning (40 s).** Click *Gulnora Rahimova* (red). Show the BP chart creeping past the
+   reduced fetal movement develop in days. Point at the Overview page: 10 patients, who needs attention today.
+2. **The clinic's morning (40 s).** Open **Bemorlar** in the sidebar (search, filters), click *Gulnora Rahimova* (red). Show the BP chart creeping past the
    140/90 line over two weeks, her own words in the log, and the AI summary with suggested actions.
    Mention *Feruza* — flagged as "silent" because she stopped answering 5 days ago.
-   Open **Clinical basis** in the header: every rule, its condition and its source, readable by a doctor.
+   Open **Klinik asos** in the sidebar: every rule, its condition and its source, readable by a doctor.
    Press **+ New patient**, register someone, and let a judge scan the QR code with their own phone.
 3. **The mother's 2 minutes (60 s).** On the phone (Dilnoza, week 31) press *Boshlash*. Answer normally,
    but select **Qon ketishi** (bleeding) and write a short note. Finish.

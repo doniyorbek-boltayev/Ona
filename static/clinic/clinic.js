@@ -16,6 +16,9 @@ const T = {
     inviteTitle: "Connect the mother's phone", inviteSub: "She scans this code with her phone camera, or you send her the link. The app opens in her browser, with nothing to install.", copy: "Copy link", copied: "Copied", close: "Close", invite: "App link / QR",
     rulesBtn: "Clinical basis", rulesTitle: "Clinical basis of the risk levels", rulesSub: "The risk level is set only by these {n} rules, covered by {t} automated tests. AI explains a level but can never lower it. Thresholds still need validation with local obstetricians.",
     colRule: "Rule", colLogic: "Condition", colSource: "Source", regError: "Check the name and the date",
+    navOverview: "Overview", navPatients: "Patients", navAlerts: "Alerts", navRules: "Clinical basis", search: "Search by name, district or doctor…",
+    fAll: "All", fMine: "My patients", colName: "Patient", colWeek: "Week", colDoctor: "Doctor", colLast: "Last check-in", col14: "14 days", back: "All patients",
+    attention: "Needs attention today", seeAll: "See all", noMatches: "No patients match", allCalm: "Nobody needs attention right now", hello: "Good day",
     loginTitle: "Clinic sign-in", loginSub: "For clinic staff only. Patients use the Ona mobile app.", username: "Username", password: "Password", signIn: "Sign in", signingIn: "Signing in…",
     loginError: "Wrong username or password", loginOffline: "Cannot reach the server", logout: "Sign out", demoHint: "Demo account: {u} · password: {p}" },
   ru: { sub: "Дистанционное наблюдение беременных", patients: "Пациентки", red: "Срочно", yellow: "Внимание", silent: "Молчат", today: "Опрос сегодня",
@@ -34,6 +37,9 @@ const T = {
     inviteTitle: "Подключите телефон пациентки", inviteSub: "Она сканирует код камерой телефона, или вы отправляете ей ссылку. Приложение откроется в браузере, устанавливать ничего не нужно.", copy: "Скопировать ссылку", copied: "Скопировано", close: "Закрыть", invite: "Ссылка / QR",
     rulesBtn: "Клиническая основа", rulesTitle: "Клиническая основа уровней риска", rulesSub: "Уровень риска задают только эти {n} правил, покрытых {t} автотестами. ИИ объясняет уровень, но не может его понизить. Пороги требуют согласования с местными акушерами-гинекологами.",
     colRule: "Правило", colLogic: "Условие", colSource: "Источник", regError: "Проверьте имя и дату",
+    navOverview: "Обзор", navPatients: "Пациентки", navAlerts: "Оповещения", navRules: "Клиническая основа", search: "Поиск по имени, району или врачу…",
+    fAll: "Все", fMine: "Мои пациентки", colName: "Пациентка", colWeek: "Неделя", colDoctor: "Врач", colLast: "Последний опрос", col14: "14 дней", back: "Все пациентки",
+    attention: "Сегодня требуют внимания", seeAll: "Показать все", noMatches: "Ничего не найдено", allCalm: "Сейчас никто не требует внимания", hello: "Добрый день",
     loginTitle: "Вход для клиники", loginSub: "Только для сотрудников клиники. Пациентки пользуются мобильным приложением Ona.", username: "Логин", password: "Пароль", signIn: "Войти", signingIn: "Входим…",
     loginError: "Неверный логин или пароль", loginOffline: "Нет связи с сервером", logout: "Выйти", demoHint: "Демо-аккаунт: {u} · пароль: {p}" },
   uz: { sub: "Homiladorlarni masofadan kuzatish", patients: "Bemorlar", red: "Shoshilinch", yellow: "E'tibor", silent: "Javobsiz", today: "Bugun to'ldirgan",
@@ -52,6 +58,9 @@ const T = {
     inviteTitle: "Onaning telefonini ulang", inviteSub: "U kodni telefon kamerasi bilan skanerlaydi yoki siz havolani yuborasiz. Ilova brauzerda ochiladi, hech narsa o'rnatish shart emas.", copy: "Havolani nusxalash", copied: "Nusxalandi", close: "Yopish", invite: "Ilova havolasi / QR",
     rulesBtn: "Klinik asos", rulesTitle: "Xavf darajalarining klinik asosi", rulesSub: "Xavf darajasini faqat shu {n} ta qoida belgilaydi, ular {t} ta avtomatik test bilan qoplangan. AI darajani tushuntiradi, lekin hech qachon pasaytira olmaydi. Chegaralar mahalliy akusher-ginekologlar bilan tasdiqlanishi kerak.",
     colRule: "Qoida", colLogic: "Shart", colSource: "Manba", regError: "Ism va sanani tekshiring",
+    navOverview: "Umumiy ko'rinish", navPatients: "Bemorlar", navAlerts: "Ogohlantirishlar", navRules: "Klinik asos", search: "Ism, tuman yoki shifokor bo'yicha qidirish…",
+    fAll: "Hammasi", fMine: "Mening bemorlarim", colName: "Bemor", colWeek: "Hafta", colDoctor: "Shifokor", colLast: "Oxirgi so'rovnoma", col14: "14 kun", back: "Barcha bemorlar",
+    attention: "Bugun e'tibor talab qiladi", seeAll: "Hammasini ko'rish", noMatches: "Mos bemor topilmadi", allCalm: "Hozir hech kim e'tibor talab qilmayapti", hello: "Xayrli kun",
     loginTitle: "Klinika uchun kirish", loginSub: "Faqat klinika xodimlari uchun. Bemorlar Ona mobil ilovasidan foydalanadi.", username: "Login", password: "Parol", signIn: "Kirish", signingIn: "Kirilmoqda…",
     loginError: "Login yoki parol noto'g'ri", loginOffline: "Server bilan aloqa yo'q", logout: "Chiqish", demoHint: "Demo hisob: {u} · parol: {p}" },
 };
@@ -59,7 +68,7 @@ const SERIES = ["#2a78d6", "#eb6834"];  // validated categorical slots 1-2; stat
 const SLEEP = { lt5: "<5h", "5to7": "5–7h", gt7: ">7h" };
 
 const DEMO_LOGIN = { u: "matkarimova", p: "ona2026" };  // shown on the login card; remove for a real deployment
-const S = { user: null, timers: [], lang: localStorage.getItem("ona.clinic.lang") || "en", meta: null, status: null, list: null, pid: null, detail: null, summary: null, summaryBusy: false, draft: "" };
+const S = { view: "overview", filter: "all", query: "", rules: null, user: null, timers: [], lang: localStorage.getItem("ona.clinic.lang") || "en", meta: null, status: null, list: null, pid: null, detail: null, summary: null, summaryBusy: false, draft: "" };
 const $ = (id) => document.getElementById(id);
 const t = (k, v) => Object.entries(v || {}).reduce((s, [a, b]) => s.replace("{" + a + "}", b), (T[S.lang] || T.en)[k] ?? k);
 const loc = (o) => (o && (o[S.lang] || o.en)) || "";
@@ -90,48 +99,128 @@ const shortDay = (iso) => S.lang === "uz" ? `${+iso.slice(8, 10)}-${UZ_MONTHS[+i
 const stamp = (iso) => shortDay(iso) + " " + iso.slice(11, 16);
 const reasonsText = (codes) => codes.map((c) => loc(S.meta.reasons[c]?.text) || c).join(" · ");
 
-// ---- top bar + list ----------------------------------------------------------
+// ---- navigation shell ----------------------------------------------------------
+// Views: overview | patients | alerts | rules | patient. The URL hash mirrors the view, so Back and reload work.
 
-function renderTop() {
-  const ps = S.list.patients, n = (f) => ps.filter(f).length;
-  const live = S.status.ai.mode === "live";
-  $("top").replaceChildren(
-    h("div", { class: "logo" }, h("img", { src: "/static/icon.svg", alt: "" }), h("div", {}, S.status.clinic.name, h("small", {}, t("sub")))),
-    h("div", { class: "top-right" },
-      h("button", { class: "chip btnlike", onclick: showRules }, icon("clipboard", 14), t("rulesBtn")),
-      h("span", { class: "chip" + (live ? " live" : ""), title: S.status.ai.last_error || "" }, h("i", { class: "pulse-dot" }), live ? t("live") + " · " + S.status.ai.model : t("offline")),
-      LangSwitch(),
-      h("div", { class: "user" }, h("span", { class: "user-avatar" }, icon("user", 16)), h("span", { class: "user-name" }, S.user.name),
-        h("button", { class: "icon-btn", onclick: logout, title: t("logout"), "aria-label": t("logout") }, icon("logout", 17)))));
-  const kpi = (cls, ic, value, label) => h("div", { class: "kpi " + cls }, h("div", { class: "kpi-icon" }, icon(ic, 20)), h("div", {}, h("b", {}, value), h("span", {}, label)));
-  $("kpis").replaceChildren(
-    kpi("", "users", ps.length, t("patients")),
-    kpi("red", "alert-octagon", n((p) => p.level === "red"), t("red")),
-    kpi("yellow", "alert-triangle", n((p) => p.level === "yellow"), t("yellow")),
-    kpi("grey", "bell-off", n((p) => p.silent), t("silent")),
-    kpi("green", "check-circle", n((p) => p.last_checkin?.day === S.status.today) + " / " + ps.length, t("today")));
+function go(view, pid) {
+  const hash = view === "patient" ? "#patient/" + pid : "#" + view;
+  if (location.hash === hash) route(); else location.hash = hash;
 }
 
-function renderList() {
-  const alerts = S.list.alerts;
-  $("list").replaceChildren(...[
-    h("div", { class: "section-title" }, h("span", {}, t("alerts")), h("span", {}, alerts.length || "")),
-    alerts.length ? alerts.map((a) => h("div", { class: "alert " + a.level, onclick: () => select(a.patient_id) },
-      h("div", { class: "who" }, h("span", { class: "who-name" }, h("i", { class: "alert-icon" }, icon(a.level === "red" ? "alert-octagon" : "alert-triangle", 15)), a.patient_name), h("time", {}, stamp(a.created_at))),
-      h("div", { class: "why" }, t("source_" + a.source) + (a.reasons.length ? " — " + reasonsText(a.reasons) : "")),
-      a.note ? h("div", { class: "why" }, "“" + a.note + "”") : null,
-      h("div", { class: "acts" }, h("button", { class: "mini" }, t("view")),
-        h("button", { class: "mini ok", onclick: async (e) => { e.stopPropagation(); await api(`/api/alerts/${a.id}/ack`, {}); refresh(true); } }, icon("check", 14), t("ack")))))
-      : h("div", { class: "empty" }, t("noAlerts")),
-    h("div", { class: "section-title", style: "margin-top:18px;align-items:center" }, h("span", {}, t("all")),
-      h("button", { class: "mini add", onclick: showRegister }, "+ " + t("newPatient"))),
-    S.list.patients.map((p) => h("button", { class: "patient" + (p.id === S.pid ? " on" : ""), onclick: () => select(p.id) },
-      h("i", { class: "lv " + p.level }),
-      h("div", { style: "min-width:0" },
-        h("div", { class: "name" }, p.name, p.open_alerts ? h("span", { class: "badge " + (p.level === "red" ? "red" : "") }, p.open_alerts) : null),
-        h("div", { class: "sub" }, `${p.week} ${t("wk")} · ` + (p.silent ? (p.silent_days == null ? t("never") : t("silentFor", { n: p.silent_days }))
-          : p.last_checkin.reasons.length ? reasonsText(p.last_checkin.reasons) : p.district))),
-      h("div", { class: "spark" }, p.timeline.map((lv) => h("i", { class: lv || "" })))))].flat());
+function route() {
+  if (!S.user) return;
+  const m = location.hash.match(/^#(?:patient\/)?(\d+)$/);
+  const view = location.hash.slice(1);
+  closeModal();
+  if (m) { S.view = "patient"; renderSide(); renderMain(); return select(+m[1]); }
+  S.view = ["overview", "patients", "alerts", "rules"].includes(view) ? view : "overview";
+  S.pid = null; S.detail = null;
+  renderSide(); renderMain();
+  if (S.view === "rules" && !S.rules) api("/api/rules").then((d) => { S.rules = d; if (S.view === "rules") renderMain(); });
+}
+window.addEventListener("hashchange", route);
+
+function renderSide() {
+  const live = S.status.ai.mode === "live";
+  const nav = [["overview", "home", t("navOverview")], ["patients", "users", t("navPatients"), S.list.patients.length],
+    ["alerts", "bell", t("navAlerts"), S.list.alerts.length, S.list.alerts.some((a) => a.level === "red") ? "red" : "yellow"], ["rules", "clipboard", t("navRules")]];
+  $("side").replaceChildren(
+    h("div", { class: "logo" }, h("img", { src: "/static/icon.svg", alt: "" }), h("div", { class: "label" }, S.status.clinic.name, h("small", {}, t("sub")))),
+    h("div", { class: "nav" }, nav.map(([view, ic, label, count, tone]) => h("button", { class: (S.view === view || (view === "patients" && S.view === "patient")) ? "on" : "", onclick: () => go(view), title: label },
+      icon(ic, 19), h("span", { class: "label" }, label), count ? h("span", { class: "count " + (tone || "") }, count) : null))),
+    h("div", { class: "side-foot" },
+      h("span", { class: "chip" + (live ? " live" : ""), title: S.status.ai.last_error || "" }, h("i", { class: "pulse-dot" }), h("span", { class: "label" }, live ? t("live") + " · " + S.status.ai.model : t("offline"))),
+      LangSwitch(),
+      h("div", { class: "user" }, h("span", { class: "user-avatar" }, icon("user", 16)), h("span", { class: "user-name label" }, S.user.name),
+        h("button", { class: "icon-btn", onclick: logout, title: t("logout"), "aria-label": t("logout") }, icon("logout", 17)))));
+}
+
+function renderMain() {
+  if (S.view === "patient") return $("main").replaceChildren(
+    h("button", { class: "backlink", onclick: () => go("patients") }, icon("arrow-left", 16), t("back")), h("div", { id: "detail" }));
+  if (S.view === "patients" && $("ptable")) return renderPatientRows();  // keep the search box (and its focus) across live refreshes
+  $("main").replaceChildren({ overview: Overview, patients: PatientsPage, alerts: AlertsPage, rules: RulesPage }[S.view]());
+  if (S.view === "patients") renderPatientRows();
+}
+
+function pageHead(title, sub, action) {
+  return h("div", { class: "page-head" }, h("div", {}, h("h1", {}, title), sub ? h("p", {}, sub) : null), action);
+}
+
+function AlertCard(a) {
+  return h("div", { class: "alert " + a.level, onclick: () => go("patient", a.patient_id) },
+    h("div", { class: "who" }, h("span", { class: "who-name" }, h("i", { class: "alert-icon" }, icon(a.level === "red" ? "alert-octagon" : "alert-triangle", 15)), a.patient_name), h("time", {}, stamp(a.created_at))),
+    h("div", { class: "why" }, t("source_" + a.source) + (a.reasons.length ? " — " + reasonsText(a.reasons) : "")),
+    a.note ? h("div", { class: "why" }, "“" + a.note + "”") : null,
+    h("div", { class: "acts" }, h("button", { class: "mini" }, t("view")),
+      h("button", { class: "mini ok", onclick: async (e) => { e.stopPropagation(); await api(`/api/alerts/${a.id}/ack`, {}); refresh(true); } }, icon("check", 14), t("ack"))));
+}
+
+function PatientRow(p) {
+  const initials = p.name.split(" ").map((w) => w[0]).join("").slice(0, 2);
+  const last = p.silent ? (p.silent_days == null ? t("never") : t("silentFor", { n: p.silent_days }))
+    : shortDay(p.last_checkin.day) + (p.last_checkin.reasons.length ? " · " + reasonsText(p.last_checkin.reasons) : "");
+  return h("tr", { class: "prow", tabindex: 0, onclick: () => go("patient", p.id), onkeydown: (e) => { if (e.key === "Enter") go("patient", p.id); } },
+    h("td", {}, h("div", { class: "pname" }, h("span", { class: "pavatar " + p.level }, initials),
+      h("div", {}, h("b", {}, p.name, p.open_alerts ? h("span", { class: "badge " + (p.level === "red" ? "red" : "") }, p.open_alerts) : null), h("small", {}, [p.age && p.age + " " + t("years"), p.district].filter(Boolean).join(" · "))))),
+    h("td", { class: "num" }, p.week), h("td", {}, p.doctor),
+    h("td", { class: "last" }, h("span", { class: "tag " + (p.silent ? "" : p.level) }, p.silent ? icon("bell-off", 12) : h("i", { class: "lv " + p.level }), t(p.silent ? "silent" : p.level === "green" ? "trend_stable" : p.level)), h("small", {}, last)),
+    h("td", {}, h("div", { class: "spark" }, p.timeline.map((lv) => h("i", { class: lv || "" })))),
+    h("td", { class: "chev" }, icon("arrow-right", 16)));
+}
+
+function Overview() {
+  const ps = S.list.patients, n = (f) => ps.filter(f).length;
+  const kpi = (cls, ic, value, label, filter) => h("button", { class: "kpi " + cls, onclick: () => { S.filter = filter; S.query = ""; go("patients"); } },
+    h("div", { class: "kpi-icon" }, icon(ic, 20)), h("div", {}, h("b", {}, value), h("span", {}, label)));
+  const attention = ps.filter((p) => p.level !== "green" || p.silent).slice(0, 8);
+  return h("div", { class: "page" },
+    pageHead(t("hello") + ", " + S.user.name, shortDay(S.status.today) + " · " + S.status.clinic.name,
+      h("button", { class: "btn", onclick: showRegister }, "+ " + t("newPatient"))),
+    h("div", { class: "kpis" },
+      kpi("", "users", ps.length, t("patients"), "all"), kpi("red", "alert-octagon", n((p) => p.level === "red"), t("red"), "red"),
+      kpi("yellow", "alert-triangle", n((p) => p.level === "yellow"), t("yellow"), "yellow"), kpi("grey", "bell-off", n((p) => p.silent), t("silent"), "silent"),
+      kpi("green", "check-circle", n((p) => p.last_checkin?.day === S.status.today) + " / " + ps.length, t("today"), "all")),
+    h("div", { class: "two" },
+      h("section", { class: "card flat" }, h("h3", {}, t("alerts"), h("button", { class: "mini", onclick: () => go("alerts") }, t("seeAll") + " (" + S.list.alerts.length + ")")),
+        S.list.alerts.length ? S.list.alerts.slice(0, 4).map(AlertCard) : h("div", { class: "empty" }, t("noAlerts"))),
+      h("section", { class: "card flat" }, h("h3", {}, t("attention"), h("button", { class: "mini", onclick: () => go("patients") }, t("seeAll"))),
+        attention.length ? h("table", { class: "ptable compact" }, attention.map(PatientRow)) : h("div", { class: "empty" }, t("allCalm")))));
+}
+
+function PatientsPage() {
+  const filters = [["all", t("fAll")], ["red", t("red")], ["yellow", t("yellow")], ["silent", t("silent")], ["mine", t("fMine")]];
+  return h("div", { class: "page" },
+    pageHead(t("navPatients"), null, h("button", { class: "btn", onclick: showRegister }, "+ " + t("newPatient"))),
+    h("div", { class: "toolbar" },
+      h("input", { id: "psearch", type: "search", placeholder: t("search"), value: S.query, oninput: (e) => { S.query = e.target.value; renderPatientRows(); } }),
+      h("div", { class: "filters", id: "pfilters" }, filters.map(([id, label]) => h("button", { "data-f": id, onclick: () => { S.filter = id; renderPatientRows(); } }, label)))),
+    h("section", { class: "card flat" }, h("div", { class: "scroll-x" }, h("table", { class: "ptable", id: "ptable" }))));
+}
+
+function renderPatientRows() {
+  const q = S.query.trim().toLowerCase();
+  const match = { all: () => true, red: (p) => p.level === "red", yellow: (p) => p.level === "yellow", silent: (p) => p.silent, mine: (p) => p.doctor === S.user.name }[S.filter];
+  const rows = S.list.patients.filter((p) => match(p) && (!q || [p.name, p.district, p.doctor].join(" ").toLowerCase().includes(q)));
+  document.querySelectorAll("#pfilters button").forEach((b) => b.classList.toggle("on", b.dataset.f === S.filter));
+  $("ptable").replaceChildren(
+    h("tr", {}, [t("colName"), t("colWeek"), t("colDoctor"), t("colLast"), t("col14"), ""].map((x) => h("th", {}, x))),
+    ...(rows.length ? rows.map(PatientRow) : [h("tr", {}, h("td", { colspan: 6, class: "empty" }, t("noMatches")))]));
+}
+
+function AlertsPage() {
+  return h("div", { class: "page" }, pageHead(t("navAlerts"), null),
+    S.list.alerts.length ? h("div", { class: "alert-grid" }, S.list.alerts.map(AlertCard)) : h("section", { class: "card flat" }, h("div", { class: "empty" }, t("noAlerts"))));
+}
+
+function RulesPage() {
+  const data = S.rules;
+  const rows = (level) => data.rules.filter((r) => r.level === level).map((r) => h("tr", {},
+    h("td", {}, h("i", { class: "lv " + r.level })), h("td", {}, h("b", {}, loc(r.text))), h("td", {}, loc(r.logic) || "—"), h("td", { class: "src-cell" }, r.source)));
+  return h("div", { class: "page" }, pageHead(t("rulesTitle"), data ? t("rulesSub", { n: data.rules.length, t: data.tests }) : null),
+    h("section", { class: "card flat" }, data ? h("div", { class: "scroll-x" }, h("table", {},
+      h("tr", {}, h("th", {}), h("th", {}, t("colRule")), h("th", {}, t("colLogic")), h("th", {}, t("colSource"))), rows("red"), rows("yellow")))
+      : [h("div", { class: "skeleton" }), h("div", { class: "skeleton", style: "width:80%" })]));
 }
 
 // ---- charts ------------------------------------------------------------------
@@ -190,7 +279,8 @@ function padRange(values, step, floorMin, ceilMax) {
 
 function renderDetail() {
   const root = $("detail");
-  if (!S.detail) return root.replaceChildren(h("div", { class: "welcome" }, icon("users", 44), h("div", {}, t("pick"))));
+  if (!root) return;  // another page is open
+  if (!S.detail) return root.replaceChildren(h("div", { class: "skeleton", style: "height:90px" }), h("div", { class: "skeleton", style: "height:220px" }));
   const d = S.detail, p = d.patient;
   const days = Array.from({ length: 14 }, (_, i) => { const x = new Date(S.status.today + "T12:00"); x.setDate(x.getDate() - 13 + i); return x.toISOString().slice(0, 10); });
   const byDay = Object.fromEntries(d.checkins.map((c) => [c.day, c.answers]));
@@ -257,14 +347,17 @@ async function loadSummary(refresh) {
     const s = await api(`/api/patients/${pid}/summary`, { lang: S.lang, refresh: !!refresh });
     if (pid === S.pid) S.summary = s;
   } catch (e) { console.error(e); }
-  if (pid === S.pid) { S.summaryBusy = false; renderDetail(); S.status = await api("/api/status"); renderTop(); }
+  if (pid === S.pid) { S.summaryBusy = false; renderDetail(); S.status = await api("/api/status"); renderSide(); }
+  else S.summaryBusy = false;
 }
 
 async function select(pid) {
   S.pid = pid; S.summary = null; S.draft = ""; S.detail = null;
-  history.replaceState(null, "", "#" + pid);
-  renderList();
-  S.detail = await api(`/api/patients/${pid}?lang=${S.lang}`);
+  renderDetail();
+  let detail;
+  try { detail = await api(`/api/patients/${pid}?lang=${S.lang}`); } catch (e) { return go("patients"); }
+  if (S.pid !== pid) return;  // the doctor already moved on
+  S.detail = detail;
   S.summary = S.detail.summary;
   renderDetail();
   if (!S.summary) loadSummary(false);
@@ -285,8 +378,8 @@ function LangSwitch() {
 function setLang(l) {
   S.lang = l; localStorage.setItem("ona.clinic.lang", l); document.documentElement.lang = l;
   if (!S.user) return showLogin();
-  renderTop(); renderList();
-  if (S.pid) select(S.pid);
+  $("main").replaceChildren();
+  route();
 }
 
 async function refresh(force) {
@@ -295,8 +388,9 @@ async function refresh(force) {
   const changed = force || sig(list) !== sig(S.list);
   S.list = list;
   if (!changed) return;
-  renderTop(); renderList();
-  if (S.pid && !S.summaryBusy) {
+  renderSide();
+  if (S.view !== "patient") renderMain();
+  if (S.view === "patient" && S.pid && !S.summaryBusy) {
     const d = await api(`/api/patients/${S.pid}?lang=${S.lang}`);
     const newCheckin = sig(d.checkins[0]) !== sig(S.detail?.checkins[0]);
     S.detail = d;
@@ -338,7 +432,7 @@ function showRegister() {
       const res = await api("/api/patients", { name: f.name.value, age: f.age.value, [f.kind.value]: f.date.value, phone: f.phone.value,
         district: f.district.value, risk_factors: f.risks.value, lang: f.lang.value });
       await refresh(true);
-      await select(res.patient.id);
+      go("patient", res.patient.id);
       return showInvite(res.patient.id);
     } catch (err) { problem.textContent = t("regError") + " (" + err.message + ")"; }
     submit.disabled = false; submit.textContent = t("save");
@@ -357,14 +451,6 @@ async function showInvite(pid) {
   modal(t("inviteTitle"), t("inviteSub"), h("div", { class: "invite" },
     h("img", { class: "qr", alt: "QR", src: "data:image/svg+xml;utf8," + encodeURIComponent(inv.qr_svg) }),  // as an image, so the SVG stays inert
     h("b", {}, inv.name), link, h("div", { class: "dialog-actions" }, copy, h("button", { class: "btn", onclick: closeModal }, t("close")))));
-}
-
-async function showRules() {
-  const data = await api("/api/rules");
-  const rows = (level) => data.rules.filter((r) => r.level === level).map((r) => h("tr", {},
-    h("td", {}, h("i", { class: "lv " + r.level })), h("td", {}, h("b", {}, loc(r.text))), h("td", {}, loc(r.logic) || "—"), h("td", { class: "src-cell" }, r.source)));
-  modal(t("rulesTitle"), t("rulesSub", { n: data.rules.length, t: data.tests }), h("div", { class: "scroll-y" }, h("table", {},
-    h("tr", {}, h("th", {}), h("th", {}, t("colRule")), h("th", {}, t("colLogic")), h("th", {}, t("colSource"))), rows("red"), rows("yellow"))), true);
 }
 
 // ---- sign-in -----------------------------------------------------------------
@@ -409,15 +495,12 @@ async function logout() {
 async function start() {
   document.body.classList.remove("signed-out");
   $("login").replaceChildren();
-  $("kpis").replaceChildren();
   [S.meta, S.status, S.list] = await Promise.all([api("/api/questions"), api("/api/status"), api("/api/patients")]);
-  renderTop(); renderList(); renderDetail();
-  const initial = +location.hash.slice(1) || S.list.patients[0]?.id;
-  if (initial) select(initial);
+  route();
   S.timers.push(setInterval(() => refresh(false).catch(() => {}), 3000));
   // messages from the patient do not change the list payload, so poll the open patient too
   S.timers.push(setInterval(async () => {
-    if (!S.pid || !S.detail || S.summaryBusy) return;
+    if (S.view !== "patient" || !S.pid || !S.detail || S.summaryBusy) return;
     const d = await api(`/api/patients/${S.pid}?lang=${S.lang}`).catch(() => null);
     if (d && S.detail && (d.clinic_messages.length !== S.detail.clinic_messages.length || d.ai_messages.length !== S.detail.ai_messages.length)) { S.detail = d; renderDetail(); }
   }, 4000));
