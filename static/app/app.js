@@ -12,6 +12,7 @@ const S = {
 };
 const FACES = ["😣", "🙁", "😐", "🙂", "😄"];
 const FACES_INVERTED = ["😌", "🙂", "😐", "😟", "😰"];
+const SIZE_EMOJI = ["🌱", "🍒", "🍋", "🍎", "🥭", "🌽", "🍆", "🥥", "🍈", "🍉"];
 const LEVEL_ICON = { green: "check-circle", yellow: "alert-triangle", red: "alert-octagon" };
 
 const view = document.getElementById("view");
@@ -91,7 +92,9 @@ function Langs() {
 function Home() {
   const p = S.data.patient;
   const daysLeft = Math.max(0, Math.round((new Date(p.due_date) - new Date()) / 864e5));
-  const size = I18N[S.lang].sizes[SIZE_BY_WEEK.find(([w]) => p.week <= w)[1]];
+  const sizeIdx = SIZE_BY_WEEK.find(([w]) => p.week <= w)[1];
+  const size = I18N[S.lang].sizes[sizeIdx];
+  const tri = (from, to) => Math.max(0, Math.min(100, (p.week - from) / (to - from) * 100));
   const today = S.data.today;
   const lastClinic = S.data.clinic_messages.filter((m) => m.sender === "clinic").at(-1);
   const tip = I18N[S.lang].tips[p.week < 14 ? 0 : p.week < 28 ? 1 : 2];
@@ -103,9 +106,13 @@ function Home() {
       h("div", { class: "hello" }, h("div", { class: "avatar" }, p.name.split(" ").map((w) => w[0]).join("").slice(0, 2)),
         h("div", {}, h("h1", {}, `${t("hello")}, ${p.name.split(" ")[0]}!`), h("p", {}, `${S.data.clinic.name} · ${p.doctor}`)))),
     h("div", { class: "stack lift" },
-      h("section", { class: "card row" },
-        h("div", { class: "ring", style: `--p:${Math.min(100, p.week / 40 * 100)}` }, h("div", {}, h("b", {}, p.week), h("span", {}, t("week")))),
-        h("div", { class: "grow" }, h("h3", {}, t("weekOf", { w: p.week })), h("div", { class: "muted" }, t("daysLeft", { d: daysLeft })), h("div", { class: "muted" }, t("babySize", { x: size })))),
+      h("section", { class: "card" },
+        h("div", { class: "row" },
+          h("div", { class: "ring", style: `--p:${Math.min(100, p.week / 40 * 100)}` }, h("div", {}, h("b", {}, p.week), h("span", {}, t("week")))),
+          h("div", { class: "grow" }, h("h3", {}, t("weekOf", { w: p.week })), h("div", { class: "muted" }, t("daysLeft", { d: daysLeft })))),
+        h("div", { class: "trimesters" }, [[0, 13], [13, 27], [27, 40]].map(([a, b], i) =>
+          h("div", { class: "tri" + (p.week > a && p.week <= b ? " now" : "") }, h("i", {}, h("u", { style: `width:${tri(a, b)}%` })), h("span", {}, `${i + 1}-${t("trimester")}`)))),
+        h("div", { class: "baby" }, h("div", { class: "fruit" }, SIZE_EMOJI[sizeIdx]), h("div", { class: "muted" }, t("babySize", { x: size })))),
       today
         ? h("section", { class: "card status " + today.level },
             h("div", { class: "row" }, h("div", { class: "badge " + today.level }, icon(LEVEL_ICON[today.level], 26)),
