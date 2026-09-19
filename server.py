@@ -11,7 +11,7 @@ import os
 import re
 import socket
 import sys
-from datetime import date
+from datetime import date, timedelta
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
@@ -67,6 +67,7 @@ def _patient_row(patient):
     if alerts:
         level = triage.worst(level, *[a["level"] for a in alerts])
     by_day = {c["day"]: c["level"] for c in history}
+    patient = {k: v for k, v in patient.items() if k != "invite_token"}  # the invite secret is only shown to staff, on request
     return dict(patient, level=level, open_alerts=len(alerts),
                 silent=silent_days is None or silent_days >= SILENT_AFTER_DAYS, silent_days=silent_days,
                 last_checkin=last and {"day": last["day"], "level": last["level"], "reasons": last["reasons"], "created_at": last["created_at"]},
@@ -96,6 +97,61 @@ def api_patient(req):
             "ai_messages": db.messages(patient["id"], "ai"),
             "summary": db.get_summary(patient["id"], _lang(req["query"].get("lang"))),
             "clinic": seed.CLINIC}
+
+
+def _invite(req, patient):
+    host = req["host"] or "localhost:8000"
+    if host.split(":")[0] in ("localhost", "127.0.0.1"):  # a phone cannot open "localhost": use the LAN address instead
+        host = "%s:%s" % (lan_ip(), host.split(":")[1] if ":" in host else "80")
+    return "http://%s/?k=%s" % (host, patient["invite_token"])
+
+
+def api_register(req):
+    b = req["body"]
+    name = " ".join((b.get("name") or "").split())[:80]
+    if len(name) < 3:
+        raise ApiError(400, "name is required")
+    try:
+        if b.get("lmp"):  # last menstrual period -> Naegele's rule
+            due = date.fromisoformat(b["lmp"]) + timedelta(days=280)
+        else:
+            due = date.fromisoformat(b.get("due_date") or "")
+    except ValueError:
+        raise ApiError(400, "a valid last-period date or due date is required")
+    if not (-21 <= (due - date.today()).days <= 300):
+        raise ApiError(400, "the due date must be within the next 10 months")
+    try:
+        age = int(b["age"]) if b.get("age") not in (None, "") else None
+    except (TypeError, ValueError):
+        raise ApiError(400, "age must be a number")
+    risks = [r.strip()[:60] for r in (b.get("risk_factors") or "").split(",") if r.strip()][:8]
+    pid = db.add_patient(name=name, age=age, phone=(b.get("phone") or "").strip()[:30], district=(b.get("district") or "").strip()[:40],
+                         due_date=due.isoformat(), risk_factors=risks, doctor=req["user"]["name"], lang=_lang(b.get("lang")))
+    patient = db.get_patient(pid)
+    return {"patient": patient, "invite_url": _invite(req, patient)}
+
+
+def api_invite(req):
+    """Staff: the link + QR code to hand to a mother."""
+    import segno
+    import io
+    patient = _need_patient(req["id"])
+    url = _invite(req, patient)
+    out = io.BytesIO()
+    segno.make(url, error="m").save(out, kind="svg", scale=6, border=2, dark="#0A4F59", xmldecl=False, svgns=True, nl=False)
+    return {"invite_url": url, "qr_svg": out.getvalue().decode("utf-8"), "name": patient["name"]}
+
+
+def api_resolve(req):
+    """Mother app: exchange the secret from her link for her patient id."""
+    patient = db.patient_by_token(req["query"].get("k"))
+    if not patient:
+        raise ApiError(404, "unknown invite link")
+    return {"patient_id": patient["id"]}
+
+
+def api_rules(_req):
+    return {"rules": triage.catalogue(), "tests": 13}
 
 
 def api_checkin(req):
@@ -198,6 +254,10 @@ ROUTES = [
     ("POST", r"/api/logout", api_logout, False),
     ("GET", r"/api/me", api_me, True),
     ("GET", r"/api/patients", api_patients, True),
+    ("POST", r"/api/patients", api_register, True),
+    ("GET", r"/api/patients/(\d+)/invite", api_invite, True),
+    ("GET", r"/api/invite", api_resolve, False),
+    ("GET", r"/api/rules", api_rules, True),
     ("GET", r"/api/patients/(\d+)", api_patient, False),
     ("POST", r"/api/checkins", api_checkin, False),
     ("POST", r"/api/chat", api_chat, False),
@@ -248,7 +308,7 @@ class Handler(BaseHTTPRequestHandler):
             token = morsel.value if morsel else None
             req = {"id": int(match.group(1)) if match.groups() else None, "body": body,
                    "query": {k: v[0] for k, v in parse_qs(url.query).items()},
-                   "token": token, "user": db.session_user(token)}
+                   "token": token, "user": db.session_user(token), "host": self.headers.get("Host")}
             if staff_only and not req["user"]:
                 return self._send(401, {"error": "login required"})
             try:

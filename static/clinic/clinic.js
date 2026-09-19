@@ -11,6 +11,11 @@ const T = {
     messages: "Messages with patient", aiChat: "Her conversation with Ona AI", write: "Write to the patient…", send: "Send", empty: "Nothing yet",
     pick: "Select a patient", source_checkin: "Daily check-in", source_chat: "AI chat", live: "AI live", offline: "AI offline mode", threshold: "140/90 threshold",
     mv_normal: "normal", mv_less: "less", mv_none: "NONE", reset: "Reset demo",
+    newPatient: "New patient", regTitle: "Register a patient", fullName: "Full name", age: "Age", dateKind: "Date known", lmp: "First day of last period", dueDate: "Expected due date",
+    phoneL: "Phone", district: "District", risks: "Risk factors (comma-separated)", appLang: "App language", save: "Register", cancel: "Cancel", saving: "Saving…",
+    inviteTitle: "Connect the mother's phone", inviteSub: "She scans this code with her phone camera, or you send her the link. The app opens in her browser, with nothing to install.", copy: "Copy link", copied: "Copied", close: "Close", invite: "App link / QR",
+    rulesBtn: "Clinical basis", rulesTitle: "Clinical basis of the risk levels", rulesSub: "The risk level is set only by these {n} rules, covered by {t} automated tests. AI explains a level but can never lower it. Thresholds still need validation with local obstetricians.",
+    colRule: "Rule", colLogic: "Condition", colSource: "Source", regError: "Check the name and the date",
     loginTitle: "Clinic sign-in", loginSub: "For clinic staff only. Patients use the Ona mobile app.", username: "Username", password: "Password", signIn: "Sign in", signingIn: "Signing in…",
     loginError: "Wrong username or password", loginOffline: "Cannot reach the server", logout: "Sign out", demoHint: "Demo account: {u} · password: {p}" },
   ru: { sub: "Дистанционное наблюдение беременных", patients: "Пациентки", red: "Срочно", yellow: "Внимание", silent: "Молчат", today: "Опрос сегодня",
@@ -24,6 +29,11 @@ const T = {
     messages: "Переписка с пациенткой", aiChat: "Её диалог с Ona AI", write: "Напишите пациентке…", send: "Отправить", empty: "Пока пусто",
     pick: "Выберите пациентку", source_checkin: "Ежедневный опрос", source_chat: "ИИ-чат", live: "ИИ онлайн", offline: "ИИ офлайн", threshold: "порог 140/90",
     mv_normal: "норма", mv_less: "меньше", mv_none: "НЕТ", reset: "Сброс демо",
+    newPatient: "Новая пациентка", regTitle: "Регистрация пациентки", fullName: "Ф.И.О.", age: "Возраст", dateKind: "Известная дата", lmp: "Первый день последней менструации", dueDate: "Предполагаемая дата родов",
+    phoneL: "Телефон", district: "Район", risks: "Факторы риска (через запятую)", appLang: "Язык приложения", save: "Зарегистрировать", cancel: "Отмена", saving: "Сохраняем…",
+    inviteTitle: "Подключите телефон пациентки", inviteSub: "Она сканирует код камерой телефона, или вы отправляете ей ссылку. Приложение откроется в браузере, устанавливать ничего не нужно.", copy: "Скопировать ссылку", copied: "Скопировано", close: "Закрыть", invite: "Ссылка / QR",
+    rulesBtn: "Клиническая основа", rulesTitle: "Клиническая основа уровней риска", rulesSub: "Уровень риска задают только эти {n} правил, покрытых {t} автотестами. ИИ объясняет уровень, но не может его понизить. Пороги требуют согласования с местными акушерами-гинекологами.",
+    colRule: "Правило", colLogic: "Условие", colSource: "Источник", regError: "Проверьте имя и дату",
     loginTitle: "Вход для клиники", loginSub: "Только для сотрудников клиники. Пациентки пользуются мобильным приложением Ona.", username: "Логин", password: "Пароль", signIn: "Войти", signingIn: "Входим…",
     loginError: "Неверный логин или пароль", loginOffline: "Нет связи с сервером", logout: "Выйти", demoHint: "Демо-аккаунт: {u} · пароль: {p}" },
   uz: { sub: "Homiladorlarni masofadan kuzatish", patients: "Bemorlar", red: "Shoshilinch", yellow: "E'tibor", silent: "Javobsiz", today: "Bugun to'ldirgan",
@@ -37,6 +47,11 @@ const T = {
     messages: "Bemor bilan yozishmalar", aiChat: "Uning Ona AI bilan suhbati", write: "Bemorga yozing…", send: "Yuborish", empty: "Hozircha bo'sh",
     pick: "Bemorni tanlang", source_checkin: "Kunlik so'rovnoma", source_chat: "AI chat", live: "AI ulangan", offline: "AI oflayn rejimda", threshold: "140/90 chegarasi",
     mv_normal: "odatdagidek", mv_less: "kam", mv_none: "YO'Q", reset: "Demoni tiklash",
+    newPatient: "Yangi bemor", regTitle: "Bemorni ro'yxatga olish", fullName: "F.I.Sh.", age: "Yoshi", dateKind: "Ma'lum sana", lmp: "Oxirgi hayzning birinchi kuni", dueDate: "Taxminiy tug'ruq sanasi",
+    phoneL: "Telefon", district: "Tuman", risks: "Xavf omillari (vergul bilan)", appLang: "Ilova tili", save: "Ro'yxatga olish", cancel: "Bekor qilish", saving: "Saqlanmoqda…",
+    inviteTitle: "Onaning telefonini ulang", inviteSub: "U kodni telefon kamerasi bilan skanerlaydi yoki siz havolani yuborasiz. Ilova brauzerda ochiladi, hech narsa o'rnatish shart emas.", copy: "Havolani nusxalash", copied: "Nusxalandi", close: "Yopish", invite: "Ilova havolasi / QR",
+    rulesBtn: "Klinik asos", rulesTitle: "Xavf darajalarining klinik asosi", rulesSub: "Xavf darajasini faqat shu {n} ta qoida belgilaydi, ular {t} ta avtomatik test bilan qoplangan. AI darajani tushuntiradi, lekin hech qachon pasaytira olmaydi. Chegaralar mahalliy akusher-ginekologlar bilan tasdiqlanishi kerak.",
+    colRule: "Qoida", colLogic: "Shart", colSource: "Manba", regError: "Ism va sanani tekshiring",
     loginTitle: "Klinika uchun kirish", loginSub: "Faqat klinika xodimlari uchun. Bemorlar Ona mobil ilovasidan foydalanadi.", username: "Login", password: "Parol", signIn: "Kirish", signingIn: "Kirilmoqda…",
     loginError: "Login yoki parol noto'g'ri", loginOffline: "Server bilan aloqa yo'q", logout: "Chiqish", demoHint: "Demo hisob: {u} · parol: {p}" },
 };
@@ -83,6 +98,7 @@ function renderTop() {
   $("top").replaceChildren(
     h("div", { class: "logo" }, h("img", { src: "/static/icon.svg", alt: "" }), h("div", {}, S.status.clinic.name, h("small", {}, t("sub")))),
     h("div", { class: "top-right" },
+      h("button", { class: "chip btnlike", onclick: showRules }, icon("clipboard", 14), t("rulesBtn")),
       h("span", { class: "chip" + (live ? " live" : ""), title: S.status.ai.last_error || "" }, h("i", { class: "pulse-dot" }), live ? t("live") + " · " + S.status.ai.model : t("offline")),
       LangSwitch(),
       h("div", { class: "user" }, h("span", { class: "user-avatar" }, icon("user", 16)), h("span", { class: "user-name" }, S.user.name),
@@ -107,7 +123,8 @@ function renderList() {
       h("div", { class: "acts" }, h("button", { class: "mini" }, t("view")),
         h("button", { class: "mini ok", onclick: async (e) => { e.stopPropagation(); await api(`/api/alerts/${a.id}/ack`, {}); refresh(true); } }, icon("check", 14), t("ack")))))
       : h("div", { class: "empty" }, t("noAlerts")),
-    h("div", { class: "section-title", style: "margin-top:18px" }, h("span", {}, t("all"))),
+    h("div", { class: "section-title", style: "margin-top:18px;align-items:center" }, h("span", {}, t("all")),
+      h("button", { class: "mini add", onclick: showRegister }, "+ " + t("newPatient"))),
     S.list.patients.map((p) => h("button", { class: "patient" + (p.id === S.pid ? " on" : ""), onclick: () => select(p.id) },
       h("i", { class: "lv " + p.level }),
       h("div", { style: "min-width:0" },
@@ -191,7 +208,9 @@ function renderDetail() {
         h("div", { class: "tags" }, h("span", { class: "tag " + p.level }, t(p.level === "green" ? "trend_stable" : p.level)),
           p.silent ? h("span", { class: "tag" }, icon("bell-off", 12), p.silent_days == null ? t("never") : t("silentFor", { n: p.silent_days })) : null,
           p.risk_factors.map((r) => h("span", { class: "tag risk" }, r)))),
-      h("a", { class: "btn", href: "tel:" + (p.phone || "").replace(/\s/g, "") }, icon("phone", 16), t("call") + " " + (p.phone || ""))),
+      h("div", { class: "head-actions" },
+        h("button", { class: "btn soft", onclick: () => showInvite(p.id) }, icon("lock", 15), t("invite")),
+        h("a", { class: "btn", href: "tel:" + (p.phone || "").replace(/\s/g, "") }, icon("phone", 16), t("call") + " " + (p.phone || "")))),
     h("div", { class: "grid" },
       SummaryCard(),
       chartCard(t("bp"), () => lineChart({ days, min: bpMin, max: bpMax, step: 20, unit: "", series: [{ name: t("sys"), color: SERIES[0], values: sys }, { name: t("dia"), color: SERIES[1], values: dia }],
@@ -283,6 +302,69 @@ async function refresh(force) {
     S.detail = d;
     if (newCheckin) { S.summary = d.summary; renderDetail(); if (!S.summary) loadSummary(false); } else renderDetail();
   }
+}
+
+// ---- dialogs: register, invite, clinical basis ---------------------------------
+
+function modal(title, sub, body, wide) {
+  closeModal();
+  const close = h("button", { class: "icon-btn dark", onclick: closeModal, "aria-label": t("close") }, "✕");
+  const overlay = h("div", { id: "modal", onclick: (e) => { if (e.target.id === "modal") closeModal(); } },
+    h("div", { class: "dialog" + (wide ? " wide" : ""), role: "dialog", "aria-modal": "true" },
+      h("div", { class: "dialog-head" }, h("div", {}, h("h2", {}, title), sub ? h("p", {}, sub) : null), close), body));
+  document.body.append(overlay);
+}
+function closeModal() { document.getElementById("modal")?.remove(); }
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+function showRegister() {
+  const field = (label, input, cls) => h("label", { class: "field " + (cls || "") }, h("span", {}, label), input);
+  const f = {
+    name: h("input", { required: true, minlength: 3, maxlength: 80, autocomplete: "off" }),
+    age: h("input", { type: "number", min: 14, max: 55, inputmode: "numeric" }),
+    kind: h("select", {}, h("option", { value: "lmp" }, t("lmp")), h("option", { value: "due_date" }, t("dueDate"))),
+    date: h("input", { type: "date", required: true }),
+    phone: h("input", { type: "tel", placeholder: "+998 90 123 45 67", autocomplete: "off" }),
+    district: h("input", { maxlength: 40 }),
+    risks: h("input", { maxlength: 200, placeholder: "anemiya, gipertoniya" }),
+    lang: h("select", {}, ["uz", "ru", "en"].map((l) => h("option", { value: l }, l.toUpperCase()))),
+  };
+  const problem = h("div", { class: "login-error", role: "alert" });
+  const submit = h("button", { class: "btn", type: "submit" }, t("save"));
+  modal(t("regTitle"), null, h("form", { class: "form", onsubmit: async (e) => {
+    e.preventDefault();
+    submit.disabled = true; submit.textContent = t("saving"); problem.textContent = "";
+    try {
+      const res = await api("/api/patients", { name: f.name.value, age: f.age.value, [f.kind.value]: f.date.value, phone: f.phone.value,
+        district: f.district.value, risk_factors: f.risks.value, lang: f.lang.value });
+      await refresh(true);
+      await select(res.patient.id);
+      return showInvite(res.patient.id);
+    } catch (err) { problem.textContent = t("regError") + " (" + err.message + ")"; }
+    submit.disabled = false; submit.textContent = t("save");
+  } },
+    field(t("fullName"), f.name, "span2"), field(t("age"), f.age), field(t("phoneL"), f.phone),
+    field(t("dateKind"), f.kind), field("\u00a0", f.date), field(t("district"), f.district), field(t("appLang"), f.lang),
+    field(t("risks"), f.risks, "span2"), problem,
+    h("div", { class: "dialog-actions" }, h("button", { class: "btn soft", type: "button", onclick: closeModal }, t("cancel")), submit)));
+  f.name.focus();
+}
+
+async function showInvite(pid) {
+  const inv = await api(`/api/patients/${pid}/invite`);
+  const copy = h("button", { class: "btn soft", onclick: async () => { try { await navigator.clipboard.writeText(inv.invite_url); copy.textContent = t("copied"); } catch (e) { link.select(); } } }, t("copy"));
+  const link = h("input", { readonly: true, value: inv.invite_url, onfocus: (e) => e.target.select() });
+  modal(t("inviteTitle"), t("inviteSub"), h("div", { class: "invite" },
+    h("img", { class: "qr", alt: "QR", src: "data:image/svg+xml;utf8," + encodeURIComponent(inv.qr_svg) }),  // as an image, so the SVG stays inert
+    h("b", {}, inv.name), link, h("div", { class: "dialog-actions" }, copy, h("button", { class: "btn", onclick: closeModal }, t("close")))));
+}
+
+async function showRules() {
+  const data = await api("/api/rules");
+  const rows = (level) => data.rules.filter((r) => r.level === level).map((r) => h("tr", {},
+    h("td", {}, h("i", { class: "lv " + r.level })), h("td", {}, h("b", {}, loc(r.text))), h("td", {}, loc(r.logic) || "—"), h("td", { class: "src-cell" }, r.source)));
+  modal(t("rulesTitle"), t("rulesSub", { n: data.rules.length, t: data.tests }), h("div", { class: "scroll-y" }, h("table", {},
+    h("tr", {}, h("th", {}), h("th", {}, t("colRule")), h("th", {}, t("colLogic")), h("th", {}, t("colSource"))), rows("red"), rows("yellow"))), true);
 }
 
 // ---- sign-in -----------------------------------------------------------------

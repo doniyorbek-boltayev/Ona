@@ -56,7 +56,8 @@ static/demo.html  Stage view (phone + dashboard)  → http://localhost:8000/demo
 
 API: `GET /api/questions` · `GET /api/patients` · `GET /api/patients/{id}` ·
 `POST /api/checkins` · `POST /api/chat` · `POST /api/patients/{id}/summary` ·
-`POST /api/patients/{id}/messages` · `POST /api/alerts/{id}/ack` · `POST /api/demo/reset` · `GET /api/status` · `POST /api/login` · `POST /api/logout` · `GET /api/me`
+`POST /api/patients/{id}/messages` · `POST /api/alerts/{id}/ack` · `POST /api/demo/reset` · `GET /api/status` · `POST /api/login` · `POST /api/logout` · `GET /api/me` ·
+`POST /api/patients` (register) · `GET /api/patients/{id}/invite` (link + QR) · `GET /api/invite?k=` · `GET /api/rules`
 
 Auth: clinic staff sign in at `/clinic` (accounts in `seed.STAFF`, shared password from `ONA_CLINIC_PASSWORD`,
 default `ona2026`). The patient list, AI summary, alert acknowledgement and clinic-side messaging need a session.
@@ -83,6 +84,8 @@ Phone on the same Wi-Fi: open `http://<laptop-ip>:8000/` (the server prints the 
 - [x] 6. End-to-end verification in a browser, fix bugs
 - [x] 7. `README.md` with a 3-minute demo script for the judges
 - [x] 9. OpenAI provider (`gpt-5-mini`) alongside Anthropic; `.env` template; provider-neutral UI labels
+- [x] 11. Patient registration from the dashboard (due date or LMP → Naegele), invite link + QR code (`segno`), mother app opens by `?k=<secret>`;
+  "Clinical basis" panel listing every triage rule with its condition and source (`triage.catalogue()`)
 - [x] 10. Design pass: self-hosted Manrope font (`static/fonts/`), shared SVG icon set (`static/icons.js`) instead of
   emoji in navigation/alerts/buttons, new home screen (status card, quick actions, daily tip), dashboard KPI strip
 - [x] 8. Clinic login: staff accounts (PBKDF2 hashes), cookie sessions, protected dashboard endpoints, sign-in screen

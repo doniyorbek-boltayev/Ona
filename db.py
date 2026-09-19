@@ -89,6 +89,11 @@ def connect():
 def init():
     with connect() as c:
         c.executescript(SCHEMA)
+        # invite_token: the secret in the link / QR code a clinic gives to a mother (added after the first release)
+        if "invite_token" not in [r["name"] for r in c.execute("PRAGMA table_info(patients)")]:
+            c.execute("ALTER TABLE patients ADD COLUMN invite_token TEXT")
+        for row in c.execute("SELECT id FROM patients WHERE invite_token IS NULL").fetchall():
+            c.execute("UPDATE patients SET invite_token=? WHERE id=?", (secrets.token_urlsafe(9), row["id"]))
 
 
 def now():
@@ -126,11 +131,17 @@ def _alert(row):
 def add_patient(**f):
     with connect() as c:
         cur = c.execute(
-            "INSERT INTO patients (name, age, phone, district, due_date, risk_factors, doctor, lang) VALUES (?,?,?,?,?,?,?,?)",
+            "INSERT INTO patients (name, age, phone, district, due_date, risk_factors, doctor, lang, invite_token) VALUES (?,?,?,?,?,?,?,?,?)",
             (f["name"], f.get("age"), f.get("phone"), f.get("district"), f["due_date"],
-             json.dumps(f.get("risk_factors", [])), f.get("doctor"), f.get("lang", "uz")),
+             json.dumps(f.get("risk_factors", [])), f.get("doctor"), f.get("lang", "uz"), secrets.token_urlsafe(9)),
         )
         return cur.lastrowid
+
+
+def patient_by_token(token):
+    with connect() as c:
+        row = c.execute("SELECT * FROM patients WHERE invite_token=?", (token or "",)).fetchone()
+    return _patient(row) if row else None
 
 
 def get_patient(pid):

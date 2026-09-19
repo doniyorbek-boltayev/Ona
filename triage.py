@@ -43,6 +43,40 @@ REASONS = {
 }
 
 
+# Where each rule comes from. Shown to clinicians in the dashboard's "Clinical basis" panel.
+WHO = "WHO: Pregnancy, Childbirth, Postpartum and Newborn Care (danger signs)"
+BP_SRC = "ISSHP 2021 / ACOG: hypertension in pregnancy thresholds"
+RCOG = "RCOG Green-top Guideline 57: reduced fetal movements"
+PRETERM = "WHO definition of preterm: before 37 completed weeks"
+HEURISTIC = "Ona heuristic, to be validated with local obstetricians"
+SOURCES = {
+    "bleeding": WHO, "fluid_leak": WHO, "abdominal_pain": WHO, "breathless": WHO, "fever": WHO, "fever_with_pain": WHO,
+    "severe_headache": WHO, "vision": WHO, "swelling": WHO, "preeclampsia_signs": BP_SRC, "bp_severe": BP_SRC, "bp_high": BP_SRC,
+    "no_movement": RCOG, "less_movement": RCOG, "preterm_contractions": PRETERM, "term_contractions": PRETERM,
+}
+LOGIC = {
+    "preeclampsia_signs": _t("20-haftadan: bosim ≥140/90 va bitta belgi (kuchli bosh og'rig'i, ko'rish, shish) YOKI ikkita belgi birga",
+                             "С 20-й недели: АД ≥140/90 плюс один признак (сильная головная боль, зрение, отёки) ИЛИ два признака вместе",
+                             "From week 20: BP ≥140/90 plus one sign (severe headache, vision, swelling) OR any two signs together"),
+    "no_movement": _t("Faqat 24-haftadan boshlab so'raladi", "Спрашивается только с 24-й недели", "Asked only from week 24"),
+    "less_movement": _t("Faqat 24-haftadan boshlab so'raladi", "Спрашивается только с 24-й недели", "Asked only from week 24"),
+    "preterm_contractions": _t("Muntazam to'lg'oq, 37-haftagacha", "Регулярные схватки до 37 недель", "Regular contractions before week 37"),
+    "term_contractions": _t("Muntazam to'lg'oq, 37-haftadan keyin", "Регулярные схватки после 37 недель", "Regular contractions from week 37"),
+    "fever_with_pain": _t("Isitma + qorin og'rig'i yoki siyishda achishish", "Температура + боль в животе или жжение при мочеиспускании", "Fever plus abdominal pain or burning urination"),
+    "severe_headache": _t("«Kuchli, dori yordam bermayapti» tanlanganda", "Если выбрано «сильная, лекарства не помогают»", "When \"severe, medicine does not help\" is chosen"),
+    "bp_high": _t("60–260 / 30–160 oralig'idan tashqari qiymatlar xato deb hisoblanadi", "Значения вне 60–260 / 30–160 считаются опечаткой", "Values outside 60–260 / 30–160 are treated as typing errors"),
+    "rapid_weight_gain": _t("So'nggi 7 kundagi eng past vaznga nisbatan", "Относительно минимального веса за последние 7 дней", "Compared with the lowest weight of the last 7 days"),
+    "low_mood_streak": _t("Kayfiyat ≤2/5, ketma-ket 3 kun", "Настроение ≤2/5 три дня подряд", "Mood ≤2/5 on three consecutive days"),
+    "anxiety_streak": _t("Xavotir ≥4/5, ketma-ket 3 kun", "Тревога ≥4/5 три дня подряд", "Anxiety ≥4/5 on three consecutive days"),
+    "missed_meds_streak": _t("Ketma-ket 3 kun «yo'q» javobi", "Ответ «нет» три дня подряд", "Answered \"no\" three days in a row"),
+}
+
+
+def catalogue():
+    return [{"code": code, "level": level, "text": text, "logic": LOGIC.get(code), "source": SOURCES.get(code, HEURISTIC)}
+            for code, (level, text) in REASONS.items()]
+
+
 def _num(value):
     try:
         return float(value)

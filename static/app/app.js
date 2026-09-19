@@ -305,6 +305,17 @@ function History() {
 
 (async function boot() {
   try {
+    // A mother arrives through her invite link (?k=secret). Remember it, so the home-screen icon opens her own profile.
+    let key = params.get("k");
+    try { if (key) localStorage.setItem("ona.k", key); else if (!params.get("p")) key = localStorage.getItem("ona.k"); } catch (e) { /* private mode */ }
+    if (key) {
+      try {
+        S.pid = (await api("/api/invite?k=" + encodeURIComponent(key))).patient_id;
+      } catch (e) {  // a stale link (for example after a demo reset) must not brick the app
+        try { localStorage.removeItem("ona.k"); } catch (e2) { /* ignore */ }
+      }
+      if (params.get("k")) history.replaceState(null, "", location.pathname);  // keep the secret out of the address bar and screenshots
+    }
     [S.meta] = await Promise.all([api("/api/questions"), load()]);
     render();
     // pick up new clinic messages while the app is open
